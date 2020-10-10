@@ -21,6 +21,19 @@ export const Filter = ({
 export const Filters = ({ originalDataSet, updateDataSet, children }) => {
   const [filters, setFilters] = useState([]);
 
+  const removeAll = () => {
+    const removedFilters = {
+      ...filters
+    };
+
+    Object.keys(removedFilters).forEach((filterName) => {
+      removedFilters[filterName].isApplied = false;
+    });
+
+    updateDataSet(originalDataSet);
+    setFilters(removedFilters);
+  };
+
   const apply = (name, transformation) => {
     let updatedFilters = {
       ...filters
@@ -64,5 +77,5 @@ export const Filters = ({ originalDataSet, updateDataSet, children }) => {
     return filters[name] ? filters[name].isApplied : false;
   };
 
-  return children(apply, isApplied);
+  return children(apply, isApplied, removeAll);
 };

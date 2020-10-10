@@ -6,7 +6,13 @@ import "./styles.css";
 export default function App() {
   const [crabs, setCrabs] = useState(allCrabs);
 
-  const buttonStyles = {
+  const removeAllButtonStyles = {
+    display: "block",
+    margin: "0 auto",
+    marginBottom: 20
+  };
+
+  const filterButtonStyles = {
     marginRight: 10
   };
 
@@ -14,9 +20,12 @@ export default function App() {
     <div className="App">
       <h1>🦀 Filter Those Crabs 🦀</h1>
       <Filters originalDataSet={allCrabs} updateDataSet={setCrabs}>
-        {(apply, isApplied) => {
+        {(apply, isApplied, removeAll) => {
           return (
             <>
+              <button style={removeAllButtonStyles} onClick={() => removeAll()}>
+                🗑️ Remove all filters
+              </button>
               <Filter
                 name="red-crabs"
                 transformation={(crab) => crab.shellColour === "red"}
@@ -25,7 +34,10 @@ export default function App() {
               >
                 {(applied, onClick) => {
                   return (
-                    <button style={buttonStyles} onClick={() => onClick()}>
+                    <button
+                      style={filterButtonStyles}
+                      onClick={() => onClick()}
+                    >
                       {applied() ? "✔️ red crabs" : "❌ red crabs"}
                     </button>
                   );
@@ -39,7 +51,10 @@ export default function App() {
               >
                 {(applied, onClick) => {
                   return (
-                    <button style={buttonStyles} onClick={() => onClick()}>
+                    <button
+                      style={filterButtonStyles}
+                      onClick={() => onClick()}
+                    >
                       {applied() ? "✔️ strong crabs" : "❌ strong crabs"}
                     </button>
                   );
@@ -53,7 +68,10 @@ export default function App() {
               >
                 {(applied, onClick) => {
                   return (
-                    <button style={buttonStyles} onClick={() => onClick()}>
+                    <button
+                      style={filterButtonStyles}
+                      onClick={() => onClick()}
+                    >
                       {applied() ? "✔️ weak crabs" : "❌ weak crabs"}
                     </button>
                   );
@@ -67,7 +85,10 @@ export default function App() {
               >
                 {(applied, onClick) => {
                   return (
-                    <button style={buttonStyles} onClick={() => onClick()}>
+                    <button
+                      style={filterButtonStyles}
+                      onClick={() => onClick()}
+                    >
                       {applied()
                         ? "✔️ attack buffed crabs"
                         : "❌ attack buffed crabs"}
