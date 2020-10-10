@@ -1,5 +1,13 @@
 export default [
   {
+    name: "Z-Claw 5000",
+    strength: 100,
+    defence: 100,
+    shellColour: "hot pink",
+    isAttackBuffed: true,
+    ifDefenceBuffed: true
+  },
+  {
     name: "Clawmaster Flex",
     strength: 90,
     defence: 50,
@@ -30,5 +38,13 @@ export default [
     shellColour: "white",
     isAttackBuffed: true,
     ifDefenceBuffed: false
+  },
+  {
+    name: "Abraclawdabra",
+    strength: 80,
+    defence: 80,
+    shellColour: "yellow",
+    isAttackBuffed: true,
+    ifDefenceBuffed: true
   }
 ];

@@ -1,24 +1,10 @@
 import { useState } from "react";
 
-export const Filter = ({
-  transformation,
-  name,
-  apply,
-  isApplied,
+export const Filters = ({
+  getOriginalDataSet,
+  setFilteredDataSet,
   children
 }) => {
-  const onClick = () => {
-    apply(name, transformation);
-  };
-
-  const applied = () => {
-    return isApplied(name);
-  };
-
-  return children(applied, onClick);
-};
-
-export const Filters = ({ originalDataSet, updateDataSet, children }) => {
   const [filters, setFilters] = useState([]);
 
   const removeAll = () => {
@@ -30,7 +16,7 @@ export const Filters = ({ originalDataSet, updateDataSet, children }) => {
       removedFilters[filterName].isApplied = false;
     });
 
-    updateDataSet(originalDataSet);
+    setFilteredDataSet(getOriginalDataSet);
     setFilters(removedFilters);
   };
 
@@ -62,14 +48,14 @@ export const Filters = ({ originalDataSet, updateDataSet, children }) => {
       )
       .filter((object) => object !== undefined);
 
-    let filteredDataSet = originalDataSet;
+    let filteredDataSet = getOriginalDataSet;
 
     Object.keys(appliedFilters).forEach((filterName) => {
       const filterToApply = appliedFilters[filterName];
       filteredDataSet = filteredDataSet.filter(filterToApply.transformation);
     });
 
-    updateDataSet(filteredDataSet);
+    setFilteredDataSet(filteredDataSet);
     setFilters(updatedFilters);
   };
 
@@ -78,4 +64,18 @@ export const Filters = ({ originalDataSet, updateDataSet, children }) => {
   };
 
   return children(apply, isApplied, removeAll);
+};
+
+export const Filter = ({
+  transformation,
+  name,
+  apply,
+  isApplied,
+  children
+}) => {
+  const applyFilter = () => {
+    apply(name, transformation);
+  };
+
+  return children(isApplied(name), applyFilter);
 };

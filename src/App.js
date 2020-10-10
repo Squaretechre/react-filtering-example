@@ -1,25 +1,68 @@
 import React, { useState } from "react";
-import { Filter, Filters } from "./Filters";
-import allCrabs from "./crabs";
+import { Filters, Filter } from "./Filters";
+import {
+  Sorting,
+  Sort,
+  sortByShellColour,
+  sortByNameAlphabetically
+} from "./Sorting";
+import crabs from "./crabs";
+import { removeAllButtonStyles, filterButtonStyles } from "./styles";
 import "./styles.css";
 
 export default function App() {
-  const [crabs, setCrabs] = useState(allCrabs);
-
-  const removeAllButtonStyles = {
-    display: "block",
-    margin: "0 auto",
-    marginBottom: 20
-  };
-
-  const filterButtonStyles = {
-    marginRight: 10
-  };
+  const [currentSorting, setCurrentSorting] = useState({
+    name: "by-name-alphabetically",
+    func: sortByNameAlphabetically
+  });
+  const [filteredCrabs, setFilteredCrabs] = useState(crabs);
 
   return (
     <div className="App">
       <h1>🦀 Filter Those Crabs 🦀</h1>
-      <Filters originalDataSet={allCrabs} updateDataSet={setCrabs}>
+      <h2>Sorting</h2>
+      <Sorting
+        currentSorting={currentSorting}
+        setCurrentSorting={setCurrentSorting}
+      >
+        {(apply, isApplied) => {
+          return (
+            <>
+              <Sort
+                name="by-name-alphabetically"
+                sorting={sortByNameAlphabetically}
+                apply={apply}
+                isApplied={isApplied}
+              >
+                {(isApplied, applySorting) => {
+                  return (
+                    <button style={filterButtonStyles} onClick={applySorting}>
+                      {isApplied ? "✔️" : "❌"} by name
+                    </button>
+                  );
+                }}
+              </Sort>
+              <Sort
+                name="by-shell-colour"
+                sorting={sortByShellColour}
+                apply={apply}
+                isApplied={isApplied}
+              >
+                {(isApplied, applySorting) => {
+                  return (
+                    <button style={filterButtonStyles} onClick={applySorting}>
+                      {isApplied ? "✔️" : "❌"} by shell colour
+                    </button>
+                  );
+                }}
+              </Sort>
+            </>
+          );
+        }}
+      </Sorting>
+
+      <h2>Filtering</h2>
+      <Filters getOriginalDataSet={crabs} setFilteredDataSet={setFilteredCrabs}>
         {(apply, isApplied, removeAll) => {
           return (
             <>
@@ -32,13 +75,10 @@ export default function App() {
                 apply={apply}
                 isApplied={isApplied}
               >
-                {(applied, onClick) => {
+                {(isApplied, applyFilter) => {
                   return (
-                    <button
-                      style={filterButtonStyles}
-                      onClick={() => onClick()}
-                    >
-                      {applied() ? "✔️ red crabs" : "❌ red crabs"}
+                    <button style={filterButtonStyles} onClick={applyFilter}>
+                      {isApplied ? "✔️ red crabs" : "❌ red crabs"}
                     </button>
                   );
                 }}
@@ -49,13 +89,10 @@ export default function App() {
                 apply={apply}
                 isApplied={isApplied}
               >
-                {(applied, onClick) => {
+                {(isApplied, applyFilter) => {
                   return (
-                    <button
-                      style={filterButtonStyles}
-                      onClick={() => onClick()}
-                    >
-                      {applied() ? "✔️ strong crabs" : "❌ strong crabs"}
+                    <button style={filterButtonStyles} onClick={applyFilter}>
+                      {isApplied ? "✔️ strong crabs" : "❌ strong crabs"}
                     </button>
                   );
                 }}
@@ -66,13 +103,10 @@ export default function App() {
                 apply={apply}
                 isApplied={isApplied}
               >
-                {(applied, onClick) => {
+                {(isApplied, applyFilter) => {
                   return (
-                    <button
-                      style={filterButtonStyles}
-                      onClick={() => onClick()}
-                    >
-                      {applied() ? "✔️ weak crabs" : "❌ weak crabs"}
+                    <button style={filterButtonStyles} onClick={applyFilter}>
+                      {isApplied ? "✔️ weak crabs" : "❌ weak crabs"}
                     </button>
                   );
                 }}
@@ -83,13 +117,10 @@ export default function App() {
                 apply={apply}
                 isApplied={isApplied}
               >
-                {(applied, onClick) => {
+                {(isApplied, applyFilter) => {
                   return (
-                    <button
-                      style={filterButtonStyles}
-                      onClick={() => onClick()}
-                    >
-                      {applied()
+                    <button style={filterButtonStyles} onClick={applyFilter}>
+                      {isApplied
                         ? "✔️ attack buffed crabs"
                         : "❌ attack buffed crabs"}
                     </button>
@@ -100,7 +131,7 @@ export default function App() {
           );
         }}
       </Filters>
-      {crabs.map((crab) => (
+      {filteredCrabs.sort(currentSorting.func).map((crab) => (
         <div key={crab.name}>
           <p style={{ fontWeight: 600 }}>{crab.name}</p>
           <pre>{JSON.stringify(crab, null, 4)}</pre>
