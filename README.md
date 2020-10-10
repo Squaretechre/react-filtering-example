@@ -1,2 +1,2 @@
 # react-filtering-example
-Created with CodeSandbox
+A quick spike of using render props to apply filtering to data.
