@@ -78,7 +78,7 @@ export default function App() {
                 {(isApplied, applyFilter) => {
                   return (
                     <button style={filterButtonStyles} onClick={applyFilter}>
-                      {isApplied ? "✔️ red crabs" : "❌ red crabs"}
+                      {isApplied ? "✔️" : "❌"} red crabs
                     </button>
                   );
                 }}
@@ -92,7 +92,7 @@ export default function App() {
                 {(isApplied, applyFilter) => {
                   return (
                     <button style={filterButtonStyles} onClick={applyFilter}>
-                      {isApplied ? "✔️ strong crabs" : "❌ strong crabs"}
+                      {isApplied ? "✔️" : "❌"} strong crabs
                     </button>
                   );
                 }}
@@ -106,7 +106,7 @@ export default function App() {
                 {(isApplied, applyFilter) => {
                   return (
                     <button style={filterButtonStyles} onClick={applyFilter}>
-                      {isApplied ? "✔️ weak crabs" : "❌ weak crabs"}
+                      {isApplied ? "✔️" : "❌"} weak crabs
                     </button>
                   );
                 }}
@@ -120,9 +120,7 @@ export default function App() {
                 {(isApplied, applyFilter) => {
                   return (
                     <button style={filterButtonStyles} onClick={applyFilter}>
-                      {isApplied
-                        ? "✔️ attack buffed crabs"
-                        : "❌ attack buffed crabs"}
+                      {isApplied ? "✔️" : "❌"} attack buffed crabs
                     </button>
                   );
                 }}
