@@ -25,7 +25,7 @@ export const Sorting = ({ currentSorting, setCurrentSorting, children }) => {
       : currentSortingFunction.name === name;
   };
 
-  return children(apply, isApplied);
+  return children({ apply, isApplied });
 };
 
 export const Sort = ({ sorting, name, apply, isApplied, children }) => {
@@ -36,28 +36,24 @@ export const Sort = ({ sorting, name, apply, isApplied, children }) => {
   return children(isApplied(name), applySorting);
 };
 
-export const sortByShellColour = (a, b) => {
-  var shellColourA = a.shellColour.toUpperCase();
-  var shellColourB = b.shellColour.toUpperCase();
-  if (shellColourA < shellColourB) {
-    return -1;
-  }
-  if (shellColourA > shellColourB) {
-    return 1;
-  }
-
-  return 0;
+export const sortNumericallyAscendingBy = (property) => {
+  return (a, b) => a[property] - b[property];
 };
 
-export const sortByNameAlphabetically = (a, b) => {
-  var nameA = a.name.toUpperCase();
-  var nameB = b.name.toUpperCase();
-  if (nameA < nameB) {
-    return -1;
-  }
-  if (nameA > nameB) {
-    return 1;
-  }
+export const sortNumericallyDescendingBy = (property) => {
+  return (a, b) => b[property] - a[property];
+};
 
-  return 0;
+export const sortAlphabeticallyBy = (property) => {
+  return (a, b) => {
+    var propertyA = a[property].toUpperCase();
+    var propertyB = b[property].toUpperCase();
+    if (propertyA < propertyB) {
+      return -1;
+    }
+    if (propertyA > propertyB) {
+      return 1;
+    }
+    return 0;
+  };
 };

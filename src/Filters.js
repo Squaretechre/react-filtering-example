@@ -3,9 +3,22 @@ import { useState } from "react";
 export const Filters = ({
   getOriginalDataSet,
   setFilteredDataSet,
+  onRemoveAll,
   children
 }) => {
   const [filters, setFilters] = useState([]);
+  const [removeCallbacks, setRemoveCallbacks] = useState({});
+
+  const registerRemoveCallback = (filterName, callback) => {
+    if (removeCallbacks[filterName]) return;
+
+    let updatedRemoveCallbacks = {
+      ...removeCallbacks,
+      [filterName]: callback
+    };
+
+    setRemoveCallbacks(updatedRemoveCallbacks);
+  };
 
   const removeAll = () => {
     const removedFilters = {
@@ -18,14 +31,20 @@ export const Filters = ({
 
     setFilteredDataSet(getOriginalDataSet);
     setFilters(removedFilters);
+
+    onRemoveAll.forEach((callback) => callback());
   };
 
-  const apply = (name, transformation) => {
+  const alwaysApply = (name, transformation) => {
+    return apply(name, transformation, true);
+  };
+
+  const apply = (name, transformation, isAlwaysApplied = false) => {
     let updatedFilters = {
       ...filters
     };
 
-    if (isApplied(name)) {
+    if (!isAlwaysApplied && isFilterCurrentlyApplied(name)) {
       updatedFilters = {
         ...filters,
         [name]: {
@@ -59,11 +78,17 @@ export const Filters = ({
     setFilters(updatedFilters);
   };
 
-  const isApplied = (name) => {
+  const isFilterCurrentlyApplied = (name) => {
     return filters[name] ? filters[name].isApplied : false;
   };
 
-  return children(apply, isApplied, removeAll);
+  return children({
+    apply,
+    alwaysApply,
+    isApplied: isFilterCurrentlyApplied,
+    registerRemoveCallback,
+    removeAll
+  });
 };
 
 export const Filter = ({
@@ -78,4 +103,8 @@ export const Filter = ({
   };
 
   return children(isApplied(name), applyFilter);
+};
+
+Filter.defaultProps = {
+  isApplied: () => true
 };
