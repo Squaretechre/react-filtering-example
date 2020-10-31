@@ -1,5 +1,5 @@
 import React from "react";
-import { Filter } from "../Filters";
+import { Filter } from "./Filtering";
 
 const FilterByName = ({
   alwaysApply,

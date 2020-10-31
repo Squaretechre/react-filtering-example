@@ -1,5 +1,5 @@
 import React from "react";
-import { Filter } from "../Filters";
+import { Filter } from "./Filtering";
 import { filterButtonStyles } from "./styles";
 
 const FilterByStrong = ({ apply, isApplied }) => (

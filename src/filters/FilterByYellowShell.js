@@ -1,4 +1,4 @@
-import { Filter } from "../Filters";
+import { Filter } from "./Filtering";
 import { filterButtonStyles } from "./styles";
 
 const FilterByYellowShell = ({ apply, isApplied }) => (
