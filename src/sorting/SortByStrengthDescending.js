@@ -1,5 +1,5 @@
 import React from "react";
-import { Sort, sortNumericallyDescendingBy } from "../Sorting";
+import { Sort, sortNumericallyDescendingBy } from "./Sorting";
 import { filterButtonStyles } from "./styles";
 
 const SortByStrengthDescending = ({ apply, isApplied }) => {

@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { Filtering } from "./filtering/Filtering";
 import { Sorting } from "./sorting/Sorting";
 
-import SortByNameAlphabetically, {
-  sortByNameAlphabeticallyConfig
-} from "./sorting/SortByNameAlphabetically";
+import SortByDefaultOrdering, {
+  sortByDefaultOrderingConfig,
+  withDefaultSortOrdering
+} from "./sorting/SortByDefaultOrdering";
 
+import SortByNameAlphabetically from "./sorting/SortByNameAlphabetically";
 import SortByShellColour from "./sorting/SortByShellColour";
 import SortByStrengthAscending from "./sorting/SortByStrengthAscending";
 import SortByStrengthDescending from "./sorting/SortByStrengthDescending";
@@ -23,11 +25,13 @@ import crabs from "./crabs";
 
 import "./styles.css";
 
+const crabsWithDefaultOrdering = withDefaultSortOrdering(crabs);
+
 export default function App() {
+  const [filteredCrabs, setFilteredCrabs] = useState(crabsWithDefaultOrdering);
   const [currentSorting, setCurrentSorting] = useState(
-    sortByNameAlphabeticallyConfig
+    sortByDefaultOrderingConfig
   );
-  const [filteredCrabs, setFilteredCrabs] = useState(crabs);
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
 
   return (
@@ -43,6 +47,7 @@ export default function App() {
         {(props) => {
           return (
             <>
+              <SortByDefaultOrdering {...props} />
               <SortByNameAlphabetically {...props} />
               <SortByShellColour {...props} />
               <SortByStrengthAscending {...props} />
@@ -55,7 +60,7 @@ export default function App() {
       <h2>Filtering</h2>
 
       <Filtering
-        getOriginalDataSet={crabs}
+        getOriginalDataSet={crabsWithDefaultOrdering}
         setFilteredDataSet={setFilteredCrabs}
         onRemoveAll={[() => setCurrentSearchTerm("")]}
       >

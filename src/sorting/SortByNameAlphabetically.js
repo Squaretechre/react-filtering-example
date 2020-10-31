@@ -1,19 +1,12 @@
 import React from "react";
-import { Sort, sortAlphabeticallyBy } from "../Sorting";
+import { Sort, sortAlphabeticallyBy } from "./Sorting";
 import { filterButtonStyles } from "./styles";
-
-const name = "by-name-alphabetically";
-
-export const sortByNameAlphabeticallyConfig = {
-  name,
-  func: sortAlphabeticallyBy("name")
-};
 
 const SortByNameAlphabetically = ({ apply, isApplied }) => {
   return (
     <Sort
-      name={sortByNameAlphabeticallyConfig.name}
-      sorting={sortByNameAlphabeticallyConfig.func}
+      name={"by-name-alphabetically"}
+      sorting={sortAlphabeticallyBy("name")}
       apply={apply}
       isApplied={isApplied}
     >

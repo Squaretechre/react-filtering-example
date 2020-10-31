@@ -1,5 +1,5 @@
 import React from "react";
-import { Sort, sortAlphabeticallyBy } from "../Sorting";
+import { Sort, sortAlphabeticallyBy } from "./Sorting";
 import { filterButtonStyles } from "./styles";
 
 const SortByShellColour = ({ apply, isApplied }) => {
