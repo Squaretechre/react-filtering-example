@@ -21,7 +21,7 @@ import FilterByStrong from "./filtering/FilterByStrong";
 import FilterByAttackBuffed from "./filtering/FilterByAttackBuffed";
 import RemoveAllButton from "./filtering/RemoveAllButton";
 
-import crabs from "./crabs";
+import crabs from "./data/crabs";
 
 import "./styles.css";
 
