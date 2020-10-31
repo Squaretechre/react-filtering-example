@@ -5,12 +5,12 @@ body {
 
 .App {
   font-family: sans-serif;
-  text-align: center;
 }
 
 .filteringAndSorting {
   position: fixed;
   width: 50%;
+  text-align: center;
 }
 
 .crabList {

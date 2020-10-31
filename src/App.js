@@ -23,6 +23,8 @@ import FilterByAttackBuffed from "./components/filtering/FilterByAttackBuffed";
 import RemoveAllButton from "./components/filtering/RemoveAllButton";
 import ApplyAllButton from "./components/filtering/ApplyAllButton";
 
+import CrabRow from "./components/crab-row/CrabRow";
+
 import crabs from "./data/crabs";
 
 import "./styles.css";
@@ -98,10 +100,7 @@ export default function App() {
 
       <div className="crabList">
         {filteredCrabs.sort(currentSorting.func).map((crab) => (
-          <div key={crab.name}>
-            <p style={{ fontWeight: 600 }}>{crab.name}</p>
-            <pre>{JSON.stringify(crab, null, 4)}</pre>
-          </div>
+          <CrabRow crab={crab} />
         ))}
       </div>
     </div>

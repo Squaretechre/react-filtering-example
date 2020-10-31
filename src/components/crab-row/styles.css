@@ -1,0 +1,18 @@
+.crab-row {
+  padding: 20px;
+  border-bottom: 1px solid grey;
+  font-size: 12px;
+}
+
+.crab-row:nth-child(odd) {
+  background-color: whitesmoke;
+}
+
+.crab-row__row {
+  display: flex;
+  height: 25px;
+}
+
+.crab-row__cell {
+  width: 50%;
+}
