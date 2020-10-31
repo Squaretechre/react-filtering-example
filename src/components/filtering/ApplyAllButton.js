@@ -1,11 +1,12 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
 import React from "react";
+import { CheckMarkButtonEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const ApplyAllButton = ({ applyAll }) => {
   return (
     <button className="removeAllButton" onClick={applyAll}>
-      ✅ Apply all
+      <CheckMarkButtonEmoji />
+      Apply all
     </button>
   );
 };

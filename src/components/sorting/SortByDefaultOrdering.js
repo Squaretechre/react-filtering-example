@@ -1,5 +1,6 @@
 import React from "react";
 import { Sort, sortNumericallyAscendingBy } from "./Sorting";
+import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const name = "by-default-ordering";
@@ -29,7 +30,8 @@ const SortByDefaultOrdering = ({ apply, isApplied }) => {
       {(isApplied, applySorting) => {
         return (
           <button className="sortButton" onClick={applySorting}>
-            {isApplied ? "✔️" : "❌"} by default ordering
+            {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} by default
+            ordering
           </button>
         );
       }}

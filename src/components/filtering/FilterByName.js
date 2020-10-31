@@ -1,5 +1,6 @@
 import React from "react";
 import { Filter } from "./Filtering";
+import { MagnifyingGlassTiltedLeftEmoji } from "../emojis/Emoji";
 
 const FilterByName = ({
   alwaysApply,
@@ -10,20 +11,23 @@ const FilterByName = ({
     <Filter>
       {() => {
         return (
-          <input
-            type="text"
-            value={currentSearchTerm}
-            placeholder="Filter by crab name..."
-            onChange={(event) => {
-              const searchTerm = event.target.value.toLowerCase();
+          <>
+            <MagnifyingGlassTiltedLeftEmoji />
+            <input
+              type="text"
+              value={currentSearchTerm}
+              placeholder="Filter by crab name..."
+              onChange={(event) => {
+                const searchTerm = event.target.value.toLowerCase();
 
-              alwaysApply("search-crab-name", (crab) => {
-                return crab.name.toLowerCase().includes(searchTerm);
-              });
+                alwaysApply("search-crab-name", (crab) => {
+                  return crab.name.toLowerCase().includes(searchTerm);
+                });
 
-              setCurrentSearchTerm(event.target.value);
-            }}
-          />
+                setCurrentSearchTerm(event.target.value);
+              }}
+            />
+          </>
         );
       }}
     </Filter>

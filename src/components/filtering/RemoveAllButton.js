@@ -1,11 +1,12 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
 import React from "react";
+import { WasteBasketEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const RemoveAllButton = ({ removeAll }) => {
   return (
     <button className="removeAllButton" onClick={removeAll}>
-      🗑️ Remove all filters
+      <WasteBasketEmoji />
+      Remove all filters
     </button>
   );
 };

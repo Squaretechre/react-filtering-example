@@ -1,5 +1,6 @@
 import React from "react";
 import { Filter } from "./Filtering";
+import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const FilterByRedShell = ({ apply, isApplied }) => (
@@ -12,7 +13,7 @@ const FilterByRedShell = ({ apply, isApplied }) => (
     {(isApplied, applyFilter) => {
       return (
         <button className="filterButton" onClick={applyFilter}>
-          {isApplied ? "✔️" : "❌"} red crabs
+          {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} red crabs
         </button>
       );
     }}

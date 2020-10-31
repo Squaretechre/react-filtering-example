@@ -1,5 +1,6 @@
 import React from "react";
 import { Sort, sortAlphabeticallyBy } from "./Sorting";
+import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const SortByShellColour = ({ apply, isApplied }) => {
@@ -13,7 +14,8 @@ const SortByShellColour = ({ apply, isApplied }) => {
       {(isApplied, applySorting) => {
         return (
           <button className="sortButton" onClick={applySorting}>
-            {isApplied ? "✔️" : "❌"} by shell colour
+            {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} by shell
+            colour
           </button>
         );
       }}

@@ -1,5 +1,6 @@
 import React from "react";
 import { Filter } from "./Filtering";
+import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const FilterByWeak = ({ apply, isApplied }) => (
@@ -12,7 +13,7 @@ const FilterByWeak = ({ apply, isApplied }) => (
     {(isApplied, applyFilter) => {
       return (
         <button className="filterButton" onClick={applyFilter}>
-          {isApplied ? "✔️" : "❌"} weak crabs
+          {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} weak crabs
         </button>
       );
     }}

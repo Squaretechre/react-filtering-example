@@ -1,4 +1,5 @@
 import { Filter } from "./Filtering";
+import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const FilterByYellowShell = ({ apply, isApplied }) => (
@@ -11,7 +12,7 @@ const FilterByYellowShell = ({ apply, isApplied }) => (
     {(isApplied, applyFilter) => {
       return (
         <button className="filterButton" onClick={applyFilter}>
-          {isApplied ? "✔️" : "❌"} yellow crabs
+          {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} yellow crabs
         </button>
       );
     }}

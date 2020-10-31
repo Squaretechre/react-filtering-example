@@ -1,5 +1,6 @@
 import React from "react";
 import { Sort, sortNumericallyDescendingBy } from "./Sorting";
+import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const SortByStrengthDescending = ({ apply, isApplied }) => {
@@ -13,7 +14,8 @@ const SortByStrengthDescending = ({ apply, isApplied }) => {
       {(isApplied, applySorting) => {
         return (
           <button className="sortButton" onClick={applySorting}>
-            {isApplied ? "✔️" : "❌"} by strength desc
+            {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} by strength
+            desc
           </button>
         );
       }}

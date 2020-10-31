@@ -1,6 +1,6 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
-
 import React, { useState } from "react";
+import { CrabEmoji } from "./components/emojis/Emoji";
+
 import { Filtering } from "./components/filtering/Filtering";
 import { Sorting } from "./components/sorting/Sorting";
 
@@ -37,7 +37,9 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>🦀 Filter & Sort Those Crabs 🦀</h1>
+      <h1>
+        <CrabEmoji /> Filter & Sort Those Crabs <CrabEmoji />
+      </h1>
 
       <h2>Sorting</h2>
 
