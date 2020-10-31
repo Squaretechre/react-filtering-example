@@ -1,20 +1,23 @@
 import React from "react";
 import { Filter } from "./Filtering";
-import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
-import "./styles.css";
+import FilterButton from "./FilterButton";
 
-const FilterByYellowShell = ({ apply, isApplied }) => (
+const FilterByYellowShell = ({ ...props }) => (
   <Filter
     name="yellow-crabs"
     transformation={(crab) => crab.shellColour === "yellow"}
-    apply={apply}
-    isApplied={isApplied}
+    {...props}
   >
-    {(isApplied, applyFilter) => {
+    {(isApplied, isSelected, applyFilter, applyTogether) => {
       return (
-        <button className="filterButton" onClick={applyFilter}>
-          {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} yellow crabs
-        </button>
+        <FilterButton
+          isApplied={isApplied}
+          isSelected={isSelected}
+          applyFilter={applyFilter}
+          applyTogether={applyTogether}
+        >
+          yellow crabs
+        </FilterButton>
       );
     }}
   </Filter>

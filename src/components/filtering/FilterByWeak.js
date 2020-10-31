@@ -1,20 +1,23 @@
 import React from "react";
 import { Filter } from "./Filtering";
-import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
-import "./styles.css";
+import FilterButton from "./FilterButton";
 
-const FilterByWeak = ({ apply, isApplied }) => (
+const FilterByWeak = ({ ...props }) => (
   <Filter
     name="weak-crabs"
     transformation={(crab) => crab.defence < 50}
-    apply={apply}
-    isApplied={isApplied}
+    {...props}
   >
-    {(isApplied, applyFilter) => {
+    {(isApplied, isSelected, applyFilter, applyTogether) => {
       return (
-        <button className="filterButton" onClick={applyFilter}>
-          {isApplied ? <CheckMarkEmoji /> : <CrossMarkEmoji />} weak crabs
-        </button>
+        <FilterButton
+          isApplied={isApplied}
+          isSelected={isSelected}
+          applyFilter={applyFilter}
+          applyTogether={applyTogether}
+        >
+          weak crabs
+        </FilterButton>
       );
     }}
   </Filter>

@@ -6,10 +6,11 @@ import "./styles.css";
 const FilterByName = ({
   alwaysApply,
   currentSearchTerm,
-  setCurrentSearchTerm
+  setCurrentSearchTerm,
+  ...props
 }) => {
   return (
-    <Filter>
+    <Filter {...props}>
       {() => {
         return (
           <div className="filterByName">

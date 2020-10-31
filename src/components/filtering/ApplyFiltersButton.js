@@ -2,13 +2,13 @@ import React from "react";
 import { CheckMarkButtonEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
-const ApplyAllButton = ({ applyAll }) => {
+const ApplyFilters = ({ applySelected }) => {
   return (
-    <button className="filterButton" onClick={applyAll}>
+    <button className="filterButton" onClick={applySelected}>
       <CheckMarkButtonEmoji />
-      Apply all
+      Apply filters
     </button>
   );
 };
 
-export default ApplyAllButton;
+export default ApplyFilters;

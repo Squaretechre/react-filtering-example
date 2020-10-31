@@ -21,7 +21,8 @@ import FilterByWeak from "./components/filtering/FilterByWeak";
 import FilterByStrong from "./components/filtering/FilterByStrong";
 import FilterByAttackBuffed from "./components/filtering/FilterByAttackBuffed";
 import RemoveAllButton from "./components/filtering/RemoveAllButton";
-import ApplyAllButton from "./components/filtering/ApplyAllButton";
+import ApplyFiltersButton from "./components/filtering/ApplyFiltersButton";
+import ResetSelectionButton from "./components/filtering/ResetSelectionButton";
 
 import CrabRow from "./components/crab-row/CrabRow";
 
@@ -42,7 +43,8 @@ export default function App() {
     <div className="App">
       <div className="filteringAndSorting">
         <h1>
-          <CrabEmoji /> Filter & Sort
+          <CrabEmoji />
+          Filter & Sort
           <CrabEmoji />
         </h1>
 
@@ -69,6 +71,7 @@ export default function App() {
 
         <Filtering
           getOriginalDataSet={crabsWithDefaultOrdering}
+          getFilteredDataSet={filteredCrabs}
           setFilteredDataSet={setFilteredCrabs}
           onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
           applyTogether
@@ -89,7 +92,8 @@ export default function App() {
                   <FilterByAttackBuffed {...props} />
                 </div>
                 <div className="filterControls">
-                  {props.applyTogether && <ApplyAllButton {...props} />}
+                  {props.applyTogether && <ApplyFiltersButton {...props} />}
+                  {props.applyTogether && <ResetSelectionButton {...props} />}
                   <RemoveAllButton {...props} />
                 </div>
               </>
@@ -99,8 +103,8 @@ export default function App() {
       </div>
 
       <div className="crabList">
-        {filteredCrabs.sort(currentSorting.func).map((crab) => (
-          <CrabRow crab={crab} />
+        {filteredCrabs.sort(currentSorting.func).map((crab, i) => (
+          <CrabRow key={`crab-${i}`} crab={crab} />
         ))}
       </div>
     </div>

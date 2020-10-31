@@ -28,6 +28,7 @@ export const Filtering = ({
 
     Object.keys(removedFilters).forEach((filterName) => {
       removedFilters[filterName].isApplied = false;
+      removedFilters[filterName].isSelected = false;
     });
 
     setFilteredDataSet(getOriginalDataSet);
@@ -37,24 +38,39 @@ export const Filtering = ({
   };
 
   const filterDataWithFilters = (filters) => {
-    const appliedFilters = Object.keys(filters)
-      .map((key) => (filters[key].isApplied ? filters[key] : undefined))
-      .filter((object) => object !== undefined);
-
     let filteredDataSet = getOriginalDataSet;
 
-    Object.keys(appliedFilters).forEach((filterName) => {
-      const filterToApply = appliedFilters[filterName];
+    Object.keys(filters).forEach((filterName) => {
+      const filterToApply = filters[filterName];
       filteredDataSet = filteredDataSet.filter(filterToApply.transformation);
     });
 
     setFilteredDataSet(filteredDataSet);
   };
 
-  const applyAll = () => filterDataWithFilters(filters);
+  const applySelected = () => {
+    const updatedFilters = {
+      ...filters
+    };
+
+    Object.keys(updatedFilters).forEach((filterName) => {
+      updatedFilters[filterName].isApplied =
+        updatedFilters[filterName].isSelected;
+    });
+
+    const appliedFilters = Object.keys(updatedFilters)
+      .map((key) =>
+        updatedFilters[key].isApplied ? updatedFilters[key] : undefined
+      )
+      .filter((object) => object !== undefined);
+
+    filterDataWithFilters(appliedFilters);
+    setFilters(updatedFilters);
+  };
 
   const alwaysApply = (name, transformation) => {
-    return apply(name, transformation, true);
+    apply(name, transformation, true);
+    select(name, transformation, true);
   };
 
   const apply = (name, transformation, isAlwaysApplied = false) => {
@@ -81,23 +97,74 @@ export const Filtering = ({
 
     setFilters(updatedFilters);
 
-    if (applyTogether) return;
+    const appliedFilters = Object.keys(updatedFilters)
+      .map((key) =>
+        updatedFilters[key].isApplied ? updatedFilters[key] : undefined
+      )
+      .filter((object) => object !== undefined);
 
-    filterDataWithFilters(updatedFilters);
+    filterDataWithFilters(appliedFilters);
   };
 
   const isFilterCurrentlyApplied = (name) => {
     return filters[name] ? filters[name].isApplied : false;
   };
 
+  const isFilterCurrentlySelected = (name) => {
+    return filters[name] ? filters[name].isSelected : false;
+  };
+
+  const resetSelection = () => {
+    let updatedFilters = {
+      ...filters
+    };
+
+    Object.keys(updatedFilters).forEach(
+      (key) => (updatedFilters[key].isSelected = updatedFilters[key].isApplied)
+    );
+
+    setFilters(updatedFilters);
+  };
+
+  const select = (name, transformation, isAlwaysSelected = false) => {
+    let updatedFilters = {
+      ...filters
+    };
+
+    if (!isAlwaysSelected && isFilterCurrentlySelected(name)) {
+      updatedFilters = {
+        ...filters,
+        [name]: {
+          ...[name],
+          isSelected: false,
+          transformation
+        }
+      };
+    } else {
+      updatedFilters = {
+        ...filters,
+        [name]: {
+          ...[name],
+          isSelected: true,
+          transformation
+        }
+      };
+    }
+
+    setFilters(updatedFilters);
+  };
+
   return children({
     apply,
-    applyAll,
+    applySelected,
     alwaysApply,
     applyTogether,
     isApplied: isFilterCurrentlyApplied,
+    isSelected: isFilterCurrentlySelected,
     registerRemoveCallback,
-    removeAll
+    removeAll,
+    select,
+    resetSelection
   });
 };
 
@@ -106,15 +173,23 @@ export const Filter = ({
   name,
   apply,
   isApplied,
+  applyTogether,
+  isSelected,
+  select,
   children
 }) => {
   const applyFilter = () => {
-    apply(name, transformation);
+    if (!applyTogether) {
+      apply(name, transformation);
+      return;
+    }
+    select(name, transformation);
   };
 
-  return children(isApplied(name), applyFilter);
-};
-
-Filter.defaultProps = {
-  isApplied: () => true
+  return children(
+    isApplied(name),
+    isSelected(name),
+    applyFilter,
+    applyTogether
+  );
 };
