@@ -1,25 +1,25 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, { useState } from "react";
-import { Filtering } from "./filtering/Filtering";
-import { Sorting } from "./sorting/Sorting";
+import { Filtering } from "./components/filtering/Filtering";
+import { Sorting } from "./components/sorting/Sorting";
 
 import SortByDefaultOrdering, {
   sortByDefaultOrderingConfig,
   withDefaultSortOrdering
-} from "./sorting/SortByDefaultOrdering";
+} from "./components/sorting/SortByDefaultOrdering";
 
-import SortByNameAlphabetically from "./sorting/SortByNameAlphabetically";
-import SortByShellColour from "./sorting/SortByShellColour";
-import SortByStrengthAscending from "./sorting/SortByStrengthAscending";
-import SortByStrengthDescending from "./sorting/SortByStrengthDescending";
+import SortByNameAlphabetically from "./components/sorting/SortByNameAlphabetically";
+import SortByShellColour from "./components/sorting/SortByShellColour";
+import SortByStrengthAscending from "./components/sorting/SortByStrengthAscending";
+import SortByStrengthDescending from "./components/sorting/SortByStrengthDescending";
 
-import FilterByName from "./filtering/FilterByName";
-import FilterByRedShell from "./filtering/FilterByRedShell";
-import FilterByWeak from "./filtering/FilterByWeak";
-import FilterByStrong from "./filtering/FilterByStrong";
-import FilterByAttackBuffed from "./filtering/FilterByAttackBuffed";
-import RemoveAllButton from "./filtering/RemoveAllButton";
+import FilterByName from "./components/filtering/FilterByName";
+import FilterByRedShell from "./components/filtering/FilterByRedShell";
+import FilterByWeak from "./components/filtering/FilterByWeak";
+import FilterByStrong from "./components/filtering/FilterByStrong";
+import FilterByAttackBuffed from "./components/filtering/FilterByAttackBuffed";
+import RemoveAllButton from "./components/filtering/RemoveAllButton";
 
 import crabs from "./data/crabs";
 
