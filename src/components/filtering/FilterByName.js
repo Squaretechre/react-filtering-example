@@ -1,6 +1,7 @@
 import React from "react";
 import { Filter } from "./Filtering";
 import { MagnifyingGlassTiltedLeftEmoji } from "../emojis/Emoji";
+import "./styles.css";
 
 const FilterByName = ({
   alwaysApply,
@@ -11,8 +12,8 @@ const FilterByName = ({
     <Filter>
       {() => {
         return (
-          <>
-            <MagnifyingGlassTiltedLeftEmoji />
+          <div className="filterByName">
+            <MagnifyingGlassTiltedLeftEmoji className="filterByName__icon" />
             <input
               type="text"
               value={currentSearchTerm}
@@ -27,7 +28,7 @@ const FilterByName = ({
                 setCurrentSearchTerm(event.target.value);
               }}
             />
-          </>
+          </div>
         );
       }}
     </Filter>

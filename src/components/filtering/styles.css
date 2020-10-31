@@ -1,9 +1,20 @@
-.removeAllButton {
-  display: "block";
-  margin: "0 auto";
-  margin-bottom: 20px;
-}
-
 .filterButton {
   margin-right: 10px;
+}
+
+.filterByName {
+  width: 250px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.filterByName__icon {
+  margin-right: 10px;
+}
+
+.filters {
+  margin-bottom: 20px;
 }

@@ -4,7 +4,7 @@ import "./styles.css";
 
 const ApplyAllButton = ({ applyAll }) => {
   return (
-    <button className="removeAllButton" onClick={applyAll}>
+    <button className="filterButton" onClick={applyAll}>
       <CheckMarkButtonEmoji />
       Apply all
     </button>

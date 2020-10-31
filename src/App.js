@@ -71,19 +71,21 @@ export default function App() {
         {(props) => {
           return (
             <>
-              <div className="filterControls">
-                {props.applyTogether && <ApplyAllButton {...props} />}
-                <RemoveAllButton {...props} />
-              </div>
               <FilterByName
                 currentSearchTerm={crabNameFilterSearchTerm}
                 setCurrentSearchTerm={setCrabNameFilterSearchTerm}
                 {...props}
               />
-              <FilterByRedShell {...props} />
-              <FilterByStrong {...props} />
-              <FilterByWeak {...props} />
-              <FilterByAttackBuffed {...props} />
+              <div className="filters">
+                <FilterByRedShell {...props} />
+                <FilterByStrong {...props} />
+                <FilterByWeak {...props} />
+                <FilterByAttackBuffed {...props} />
+              </div>
+              <div className="filterControls">
+                {props.applyTogether && <ApplyAllButton {...props} />}
+                <RemoveAllButton {...props} />
+              </div>
             </>
           );
         }}

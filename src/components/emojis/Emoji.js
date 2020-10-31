@@ -1,12 +1,14 @@
 import React from "react";
 
-const Emoji = ({ emoji, ariaLabel }) => (
-  <span role="img" aria-label={ariaLabel}>
+const Emoji = ({ emoji, ariaLabel, ...props }) => (
+  <span role="img" aria-label={ariaLabel} {...props}>
     {emoji}
   </span>
 );
 
-export const CrabEmoji = () => <Emoji emoji="🦀" ariaLabel="crab" />;
+export const CrabEmoji = ({ ...props }) => (
+  <Emoji emoji="🦀" ariaLabel="crab" {...props} />
+);
 
 export const WasteBasketEmoji = () => (
   <Emoji emoji="🗑️" ariaLabel="waste basket" />
@@ -20,6 +22,6 @@ export const CheckMarkButtonEmoji = () => (
 
 export const CrossMarkEmoji = () => <Emoji emoji="❌" ariaLabel="cross mark" />;
 
-export const MagnifyingGlassTiltedLeftEmoji = () => (
-  <Emoji emoji="🔍" ariaLabel="magnifying glass tilted left" />
+export const MagnifyingGlassTiltedLeftEmoji = ({ ...props }) => (
+  <Emoji emoji="🔍" ariaLabel="magnifying glass tilted left" {...props} />
 );

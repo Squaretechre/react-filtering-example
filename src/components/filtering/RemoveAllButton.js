@@ -4,7 +4,7 @@ import "./styles.css";
 
 const RemoveAllButton = ({ removeAll }) => {
   return (
-    <button className="removeAllButton" onClick={removeAll}>
+    <button onClick={removeAll}>
       <WasteBasketEmoji />
       Remove all filters
     </button>
