@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Filters = ({
+export const Filtering = ({
   getOriginalDataSet,
   setFilteredDataSet,
   onRemoveAll,

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, { useState } from "react";
-import { Filters } from "./Filters";
+import { Filtering } from "./filters/Filtering";
 import { Sorting, sortNumericallyAscendingBy } from "./Sorting";
 
 import SortByNameAlphabetically, {
@@ -54,7 +54,7 @@ export default function App() {
 
       <h2>Filtering</h2>
 
-      <Filters
+      <Filtering
         getOriginalDataSet={crabs}
         setFilteredDataSet={setFilteredCrabs}
         onRemoveAll={[() => setCurrentSearchTerm("")]}
@@ -75,7 +75,7 @@ export default function App() {
             </>
           );
         }}
-      </Filters>
+      </Filtering>
 
       {filteredCrabs.sort(currentSorting.func).map((crab) => (
         <div key={crab.name}>
