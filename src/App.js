@@ -37,66 +37,71 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>
-        <CrabEmoji /> Filter & Sort Those Crabs <CrabEmoji />
-      </h1>
+      <div className="filteringAndSorting">
+        <h1>
+          <CrabEmoji /> Filter & Sort
+          <CrabEmoji />
+        </h1>
 
-      <h2>Sorting</h2>
+        <h2>Sorting</h2>
 
-      <Sorting
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      >
-        {(props) => {
-          return (
-            <>
-              <SortByDefaultOrdering {...props} />
-              <SortByNameAlphabetically {...props} />
-              <SortByShellColour {...props} />
-              <SortByStrengthAscending {...props} />
-              <SortByStrengthDescending {...props} />
-            </>
-          );
-        }}
-      </Sorting>
+        <Sorting
+          currentSorting={currentSorting}
+          setCurrentSorting={setCurrentSorting}
+        >
+          {(props) => {
+            return (
+              <>
+                <SortByDefaultOrdering {...props} />
+                <SortByNameAlphabetically {...props} />
+                <SortByShellColour {...props} />
+                <SortByStrengthAscending {...props} />
+                <SortByStrengthDescending {...props} />
+              </>
+            );
+          }}
+        </Sorting>
 
-      <h2>Filtering</h2>
+        <h2>Filtering</h2>
 
-      <Filtering
-        getOriginalDataSet={crabsWithDefaultOrdering}
-        setFilteredDataSet={setFilteredCrabs}
-        onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
-        applyTogether
-      >
-        {(props) => {
-          return (
-            <>
-              <FilterByName
-                currentSearchTerm={crabNameFilterSearchTerm}
-                setCurrentSearchTerm={setCrabNameFilterSearchTerm}
-                {...props}
-              />
-              <div className="filters">
-                <FilterByRedShell {...props} />
-                <FilterByStrong {...props} />
-                <FilterByWeak {...props} />
-                <FilterByAttackBuffed {...props} />
-              </div>
-              <div className="filterControls">
-                {props.applyTogether && <ApplyAllButton {...props} />}
-                <RemoveAllButton {...props} />
-              </div>
-            </>
-          );
-        }}
-      </Filtering>
+        <Filtering
+          getOriginalDataSet={crabsWithDefaultOrdering}
+          setFilteredDataSet={setFilteredCrabs}
+          onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
+          applyTogether
+        >
+          {(props) => {
+            return (
+              <>
+                <FilterByName
+                  currentSearchTerm={crabNameFilterSearchTerm}
+                  setCurrentSearchTerm={setCrabNameFilterSearchTerm}
+                  {...props}
+                />
+                <div className="filters">
+                  <FilterByRedShell {...props} />
+                  <FilterByStrong {...props} />
+                  <FilterByWeak {...props} />
+                  <FilterByAttackBuffed {...props} />
+                </div>
+                <div className="filterControls">
+                  {props.applyTogether && <ApplyAllButton {...props} />}
+                  <RemoveAllButton {...props} />
+                </div>
+              </>
+            );
+          }}
+        </Filtering>
+      </div>
 
-      {filteredCrabs.sort(currentSorting.func).map((crab) => (
-        <div key={crab.name}>
-          <p style={{ fontWeight: 600 }}>{crab.name}</p>
-          <pre>{JSON.stringify(crab, null, 4)}</pre>
-        </div>
-      ))}
+      <div className="crabList">
+        {filteredCrabs.sort(currentSorting.func).map((crab) => (
+          <div key={crab.name}>
+            <p style={{ fontWeight: 600 }}>{crab.name}</p>
+            <pre>{JSON.stringify(crab, null, 4)}</pre>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

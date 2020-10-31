@@ -1,7 +1,21 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
 .App {
   font-family: sans-serif;
   text-align: center;
 }
 
-.filterControls {
+.filteringAndSorting {
+  position: fixed;
+  width: 50%;
+}
+
+.crabList {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  border-left: 1px solid grey;
 }
