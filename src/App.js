@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Filtering } from "./filtering/Filtering";
-import { Sorting } from "./Sorting";
+import { Sorting } from "./sorting/Sorting";
 
 import SortByNameAlphabetically, {
   sortByNameAlphabeticallyConfig
