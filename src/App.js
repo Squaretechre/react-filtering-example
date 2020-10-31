@@ -32,7 +32,7 @@ export default function App() {
   const [currentSorting, setCurrentSorting] = useState(
     sortByDefaultOrderingConfig
   );
-  const [currentSearchTerm, setCurrentSearchTerm] = useState("");
+  const [crabNameFilterSearchTerm, setCrabNameFilterSearchTerm] = useState("");
 
   return (
     <div className="App">
@@ -62,15 +62,15 @@ export default function App() {
       <Filtering
         getOriginalDataSet={crabsWithDefaultOrdering}
         setFilteredDataSet={setFilteredCrabs}
-        onRemoveAll={[() => setCurrentSearchTerm("")]}
+        onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
       >
         {(props) => {
           return (
             <>
               <RemoveAllButton {...props} />
               <FilterByName
-                currentSearchTerm={currentSearchTerm}
-                setCurrentSearchTerm={setCurrentSearchTerm}
+                currentSearchTerm={crabNameFilterSearchTerm}
+                setCurrentSearchTerm={setCrabNameFilterSearchTerm}
                 {...props}
               />
               <FilterByRedShell {...props} />
