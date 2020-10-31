@@ -10,9 +10,9 @@ const valueForKey = (object, key) => {
 const CrabRow = ({ crab }) => {
   return (
     <div className="crab-row">
-      {Object.keys(crab).map((key) => {
+      {Object.keys(crab).map((key, i) => {
         return (
-          <div className="crab-row__row">
+          <div key={`row-${crab.sortOrderId}-${i}`} className="crab-row__row">
             <p className="crab-row__cell">{key}:</p>
             <p className="crab-row__cell">{valueForKey(crab, key)}</p>
           </div>
