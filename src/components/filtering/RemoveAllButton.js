@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React from "react";
-import { removeAllButtonStyles } from "./styles";
+import "./styles.css";
 
 const RemoveAllButton = ({ removeAll }) => {
   return (
-    <button style={removeAllButtonStyles} onClick={removeAll}>
+    <button className="removeAllButton" onClick={removeAll}>
       🗑️ Remove all filters
     </button>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Filter } from "./Filtering";
-import { filterButtonStyles } from "./styles";
+import "./styles.css";
 
 const FilterByStrong = ({ apply, isApplied }) => (
   <Filter
@@ -11,7 +11,7 @@ const FilterByStrong = ({ apply, isApplied }) => (
   >
     {(isApplied, applyFilter) => {
       return (
-        <button style={filterButtonStyles} onClick={applyFilter}>
+        <button className="filterButton" onClick={applyFilter}>
           {isApplied ? "✔️" : "❌"} strong crabs
         </button>
       );

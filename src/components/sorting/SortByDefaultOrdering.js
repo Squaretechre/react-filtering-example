@@ -1,6 +1,6 @@
 import React from "react";
 import { Sort, sortNumericallyAscendingBy } from "./Sorting";
-import { filterButtonStyles } from "./styles";
+import "./styles.css";
 
 const name = "by-default-ordering";
 
@@ -28,7 +28,7 @@ const SortByDefaultOrdering = ({ apply, isApplied }) => {
     >
       {(isApplied, applySorting) => {
         return (
-          <button style={filterButtonStyles} onClick={applySorting}>
+          <button className="sortButton" onClick={applySorting}>
             {isApplied ? "✔️" : "❌"} by default ordering
           </button>
         );

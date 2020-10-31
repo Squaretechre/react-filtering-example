@@ -1,5 +1,5 @@
 import { Filter } from "./Filtering";
-import { filterButtonStyles } from "./styles";
+import "./styles.css";
 
 const FilterByYellowShell = ({ apply, isApplied }) => (
   <Filter
@@ -10,7 +10,7 @@ const FilterByYellowShell = ({ apply, isApplied }) => (
   >
     {(isApplied, applyFilter) => {
       return (
-        <button style={filterButtonStyles} onClick={applyFilter}>
+        <button className="filterButton" onClick={applyFilter}>
           {isApplied ? "✔️" : "❌"} yellow crabs
         </button>
       );

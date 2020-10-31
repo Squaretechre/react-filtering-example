@@ -20,6 +20,7 @@ import FilterByWeak from "./components/filtering/FilterByWeak";
 import FilterByStrong from "./components/filtering/FilterByStrong";
 import FilterByAttackBuffed from "./components/filtering/FilterByAttackBuffed";
 import RemoveAllButton from "./components/filtering/RemoveAllButton";
+import ApplyAllButton from "./components/filtering/ApplyAllButton";
 
 import crabs from "./data/crabs";
 
@@ -63,11 +64,15 @@ export default function App() {
         getOriginalDataSet={crabsWithDefaultOrdering}
         setFilteredDataSet={setFilteredCrabs}
         onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
+        applyTogether
       >
         {(props) => {
           return (
             <>
-              <RemoveAllButton {...props} />
+              <div className="filterControls">
+                {props.applyTogether && <ApplyAllButton {...props} />}
+                <RemoveAllButton {...props} />
+              </div>
               <FilterByName
                 currentSearchTerm={crabNameFilterSearchTerm}
                 setCurrentSearchTerm={setCrabNameFilterSearchTerm}

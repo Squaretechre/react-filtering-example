@@ -1,6 +1,6 @@
 import React from "react";
 import { Sort, sortAlphabeticallyBy } from "./Sorting";
-import { filterButtonStyles } from "./styles";
+import "./styles.css";
 
 const SortByShellColour = ({ apply, isApplied }) => {
   return (
@@ -12,7 +12,7 @@ const SortByShellColour = ({ apply, isApplied }) => {
     >
       {(isApplied, applySorting) => {
         return (
-          <button style={filterButtonStyles} onClick={applySorting}>
+          <button className="sortButton" onClick={applySorting}>
             {isApplied ? "✔️" : "❌"} by shell colour
           </button>
         );

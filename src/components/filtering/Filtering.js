@@ -4,6 +4,7 @@ export const Filtering = ({
   getOriginalDataSet,
   setFilteredDataSet,
   onRemoveAll,
+  applyTogether,
   children
 }) => {
   const [filters, setFilters] = useState([]);
@@ -35,6 +36,23 @@ export const Filtering = ({
     onRemoveAll.forEach((callback) => callback());
   };
 
+  const filterDataWithFilters = (filters) => {
+    const appliedFilters = Object.keys(filters)
+      .map((key) => (filters[key].isApplied ? filters[key] : undefined))
+      .filter((object) => object !== undefined);
+
+    let filteredDataSet = getOriginalDataSet;
+
+    Object.keys(appliedFilters).forEach((filterName) => {
+      const filterToApply = appliedFilters[filterName];
+      filteredDataSet = filteredDataSet.filter(filterToApply.transformation);
+    });
+
+    setFilteredDataSet(filteredDataSet);
+  };
+
+  const applyAll = () => filterDataWithFilters(filters);
+
   const alwaysApply = (name, transformation) => {
     return apply(name, transformation, true);
   };
@@ -61,21 +79,11 @@ export const Filtering = ({
       };
     }
 
-    const appliedFilters = Object.keys(updatedFilters)
-      .map((key) =>
-        updatedFilters[key].isApplied ? updatedFilters[key] : undefined
-      )
-      .filter((object) => object !== undefined);
-
-    let filteredDataSet = getOriginalDataSet;
-
-    Object.keys(appliedFilters).forEach((filterName) => {
-      const filterToApply = appliedFilters[filterName];
-      filteredDataSet = filteredDataSet.filter(filterToApply.transformation);
-    });
-
-    setFilteredDataSet(filteredDataSet);
     setFilters(updatedFilters);
+
+    if (applyTogether) return;
+
+    filterDataWithFilters(updatedFilters);
   };
 
   const isFilterCurrentlyApplied = (name) => {
@@ -84,7 +92,9 @@ export const Filtering = ({
 
   return children({
     apply,
+    applyAll,
     alwaysApply,
+    applyTogether,
     isApplied: isFilterCurrentlyApplied,
     registerRemoveCallback,
     removeAll

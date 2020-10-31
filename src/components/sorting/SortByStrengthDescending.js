@@ -1,6 +1,6 @@
 import React from "react";
 import { Sort, sortNumericallyDescendingBy } from "./Sorting";
-import { filterButtonStyles } from "./styles";
+import "./styles.css";
 
 const SortByStrengthDescending = ({ apply, isApplied }) => {
   return (
@@ -12,7 +12,7 @@ const SortByStrengthDescending = ({ apply, isApplied }) => {
     >
       {(isApplied, applySorting) => {
         return (
-          <button style={filterButtonStyles} onClick={applySorting}>
+          <button className="sortButton" onClick={applySorting}>
             {isApplied ? "✔️" : "❌"} by strength desc
           </button>
         );
