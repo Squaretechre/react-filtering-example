@@ -16,6 +16,7 @@ import SortByStrengthDescending from "./components/sorting/SortByStrengthDescend
 
 import FilterByName from "./components/filtering/FilterByName";
 import FilterByRedShell from "./components/filtering/FilterByRedShell";
+import FilterByYellowShell from "./components/filtering/FilterByYellowShell";
 import FilterByWeak from "./components/filtering/FilterByWeak";
 import FilterByStrong from "./components/filtering/FilterByStrong";
 import FilterByAttackBuffed from "./components/filtering/FilterByAttackBuffed";
@@ -80,6 +81,7 @@ export default function App() {
                 />
                 <div className="filters">
                   <FilterByRedShell {...props} />
+                  <FilterByYellowShell {...props} />
                   <FilterByStrong {...props} />
                   <FilterByWeak {...props} />
                   <FilterByAttackBuffed {...props} />

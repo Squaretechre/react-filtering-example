@@ -16,6 +16,14 @@ export default [
     ifDefenceBuffed: true
   },
   {
+    name: "DJ Decapod",
+    strength: 70,
+    defence: 70,
+    shellColour: "green",
+    isAttackBuffed: false,
+    ifDefenceBuffed: false
+  },
+  {
     name: "MC Crabalab",
     strength: 100,
     defence: 10,
@@ -24,11 +32,19 @@ export default [
     ifDefenceBuffed: true
   },
   {
-    name: "Claws McClaw",
+    name: "Crabs McClaw",
     strength: 80,
     defence: 80,
     shellColour: "blue",
     isAttackBuffed: false,
+    ifDefenceBuffed: true
+  },
+  {
+    name: "Johnny Rawclaws",
+    strength: 10,
+    defence: 100,
+    shellColour: "purple",
+    isAttackBuffed: true,
     ifDefenceBuffed: true
   },
   {

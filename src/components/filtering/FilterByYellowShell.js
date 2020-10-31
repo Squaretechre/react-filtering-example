@@ -1,3 +1,4 @@
+import React from "react";
 import { Filter } from "./Filtering";
 import { CheckMarkEmoji, CrossMarkEmoji } from "../emojis/Emoji";
 import "./styles.css";
