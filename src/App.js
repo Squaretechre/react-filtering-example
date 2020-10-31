@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
 import React, { useState } from "react";
-import { Filtering } from "./filters/Filtering";
+import { Filtering } from "./filtering/Filtering";
 import { Sorting } from "./Sorting";
 
 import SortByNameAlphabetically, {
@@ -12,12 +12,12 @@ import SortByShellColour from "./sorting/SortByShellColour";
 import SortByStrengthAscending from "./sorting/SortByStrengthAscending";
 import SortByStrengthDescending from "./sorting/SortByStrengthDescending";
 
-import FilterByName from "./filters/FilterByName";
-import FilterByRedShell from "./filters/FilterByRedShell";
-import FilterByWeak from "./filters/FilterByWeak";
-import FilterByStrong from "./filters/FilterByStrong";
-import FilterByAttackBuffed from "./filters/FilterByAttackBuffed";
-import RemoveAllButton from "./filters/RemoveAllButton";
+import FilterByName from "./filtering/FilterByName";
+import FilterByRedShell from "./filtering/FilterByRedShell";
+import FilterByWeak from "./filtering/FilterByWeak";
+import FilterByStrong from "./filtering/FilterByStrong";
+import FilterByAttackBuffed from "./filtering/FilterByAttackBuffed";
+import RemoveAllButton from "./filtering/RemoveAllButton";
 
 import crabs from "./crabs";
 
