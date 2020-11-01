@@ -10,12 +10,12 @@ export const Filtering = ({
   const [filters, setFilters] = useState([]);
   const [removeCallbacks, setRemoveCallbacks] = useState({});
 
-  const registerRemoveCallback = (filterName, callback) => {
-    if (removeCallbacks[filterName]) return;
+  const registerRemoveCallback = (filterId, callback) => {
+    if (removeCallbacks[filterId]) return;
 
     let updatedRemoveCallbacks = {
       ...removeCallbacks,
-      [filterName]: callback
+      [filterId]: callback
     };
 
     setRemoveCallbacks(updatedRemoveCallbacks);
@@ -26,9 +26,9 @@ export const Filtering = ({
       ...filters
     };
 
-    Object.keys(removedFilters).forEach((filterName) => {
-      removedFilters[filterName].isApplied = false;
-      removedFilters[filterName].isSelected = false;
+    Object.keys(removedFilters).forEach((filterId) => {
+      removedFilters[filterId].isApplied = false;
+      removedFilters[filterId].isSelected = false;
     });
 
     setFilteredDataSet(getOriginalDataSet);
@@ -40,8 +40,8 @@ export const Filtering = ({
   const filterDataWith = (filters) => {
     let filteredDataSet = getOriginalDataSet;
 
-    Object.keys(filters).forEach((filterName) => {
-      const filterToApply = filters[filterName];
+    Object.keys(filters).forEach((filterId) => {
+      const filterToApply = filters[filterId];
       filteredDataSet = filteredDataSet.filter(filterToApply.transformation);
     });
 
@@ -53,9 +53,8 @@ export const Filtering = ({
       ...filters
     };
 
-    Object.keys(updatedFilters).forEach((filterName) => {
-      updatedFilters[filterName].isApplied =
-        updatedFilters[filterName].isSelected;
+    Object.keys(updatedFilters).forEach((filterId) => {
+      updatedFilters[filterId].isApplied = updatedFilters[filterId].isSelected;
     });
 
     const appliedFilters = Object.keys(updatedFilters)
@@ -68,27 +67,27 @@ export const Filtering = ({
     setFilters(updatedFilters);
   };
 
-  const alwaysApply = (name, transformation) => {
-    apply(name, transformation, true);
-    select(name, transformation, true);
+  const alwaysApply = (filterId, transformation) => {
+    apply(filterId, transformation, true);
+    select(filterId, transformation, true);
   };
 
-  const apply = (name, transformation, isAlwaysApplied = false) => {
+  const apply = (filterId, transformation, isAlwaysApplied = false) => {
     let updatedFilters = {
       ...filters
     };
 
-    if (!isAlwaysApplied && isFilterCurrentlyApplied(name)) {
+    if (!isAlwaysApplied && isFilterCurrentlyApplied(filterId)) {
       updatedFilters = {
         ...filters,
-        [name]: {
+        [filterId]: {
           isApplied: false
         }
       };
     } else {
       updatedFilters = {
         ...filters,
-        [name]: {
+        [filterId]: {
           isApplied: true,
           transformation
         }
@@ -106,12 +105,12 @@ export const Filtering = ({
     filterDataWith(appliedFilters);
   };
 
-  const isFilterCurrentlyApplied = (name) => {
-    return filters[name] ? filters[name].isApplied : false;
+  const isFilterCurrentlyApplied = (filterId) => {
+    return filters[filterId] ? filters[filterId].isApplied : false;
   };
 
-  const isFilterCurrentlySelected = (name) => {
-    return filters[name] ? filters[name].isSelected : false;
+  const isFilterCurrentlySelected = (filterId) => {
+    return filters[filterId] ? filters[filterId].isSelected : false;
   };
 
   const resetSelection = () => {
@@ -126,16 +125,16 @@ export const Filtering = ({
     setFilters(updatedFilters);
   };
 
-  const select = (name, transformation, isAlwaysSelected = false) => {
+  const select = (filterId, transformation, isAlwaysSelected = false) => {
     let updatedFilters = {
       ...filters
     };
 
-    if (!isAlwaysSelected && isFilterCurrentlySelected(name)) {
+    if (!isAlwaysSelected && isFilterCurrentlySelected(filterId)) {
       updatedFilters = {
         ...filters,
-        [name]: {
-          ...filters[name],
+        [filterId]: {
+          ...filters[filterId],
           isSelected: false,
           transformation
         }
@@ -143,8 +142,8 @@ export const Filtering = ({
     } else {
       updatedFilters = {
         ...filters,
-        [name]: {
-          ...filters[name],
+        [filterId]: {
+          ...filters[filterId],
           isSelected: true,
           transformation
         }
@@ -170,7 +169,6 @@ export const Filtering = ({
 
 export const Filter = ({
   transformation,
-  name,
   apply,
   isApplied,
   applyTogether,
@@ -178,17 +176,24 @@ export const Filter = ({
   select,
   children
 }) => {
+  const createFilterId = () => `
+    ${Date.now().toString(36)}
+    ${Math.random().toString(36)}
+    ${Math.random().toString(36)}`;
+
+  const [filterId] = useState(createFilterId());
+
   const applyFilter = () => {
     if (!applyTogether) {
-      apply(name, transformation);
+      apply(filterId, transformation);
       return;
     }
-    select(name, transformation);
+    select(filterId, transformation);
   };
 
   return children({
-    isApplied: isApplied(name),
-    isSelected: isSelected(name),
+    isApplied: isApplied(filterId),
+    isSelected: isSelected(filterId),
     applyFilter,
     applyTogether
   });

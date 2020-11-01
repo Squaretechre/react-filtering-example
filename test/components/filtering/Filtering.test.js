@@ -32,35 +32,22 @@ const Hotels = () => {
         {(props) => {
           return (
             <>
-              <Filter
-                name="5-star"
-                transformation={(hotel) => hotel.stars === 5}
-                {...props}
-              >
+              <Filter transformation={(hotel) => hotel.stars === 5} {...props}>
                 {(props) => {
                   return <TestButton name="5 star" {...props} />;
                 }}
               </Filter>
-              <Filter
-                name="price-less-than-100"
-                transformation={(hotel) => hotel.price < 100}
-                {...props}
-              >
+              <Filter transformation={(hotel) => hotel.price < 100} {...props}>
                 {(props) => {
                   return <TestButton name="price < 100" {...props} />;
                 }}
               </Filter>
-              <Filter
-                name="more-than-3-stars"
-                transformation={(hotel) => hotel.stars > 3}
-                {...props}
-              >
+              <Filter transformation={(hotel) => hotel.stars > 3} {...props}>
                 {(props) => {
                   return <TestButton name="stars > 3" {...props} />;
                 }}
               </Filter>
               <Filter
-                name="more-than-6000-reviews"
                 transformation={(hotel) => hotel.reviews > 6000}
                 {...props}
               >
