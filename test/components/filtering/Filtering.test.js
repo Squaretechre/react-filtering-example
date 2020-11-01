@@ -159,9 +159,9 @@ const resetSelection = "Reset selection";
 const removeAllFilters = "Remove all filters";
 const filterByAddress = "Filter by address";
 
-function expectHotelIsInTheDocument(name) {
+const expectHotelIsInTheDocument = (name) => {
   expect(screen.queryByText(name)).toBeInTheDocument();
-}
+};
 
 const expectHotelIsNotInTheDocument = (name) => {
   expect(screen.queryByText(name)).not.toBeInTheDocument();
@@ -297,6 +297,38 @@ describe("Filtering", () => {
     expectHotelIsNotInTheDocument(hyperion);
     expectHotelIsNotInTheDocument(hampton);
     expectHotelIsNotInTheDocument(titanicComfort);
+  });
+
+  it("applies always applied filters on top of already applied filters", () => {
+    render(<Hotels />);
+
+    fireEvent.click(screen.getByText(starsGreaterThan3NotSelected));
+    fireEvent.click(screen.getByText(reviewsGreaterThan6000NotSelected));
+    fireEvent.click(screen.getByText(applyFilters));
+
+    expectHotelIsInTheDocument(parkInn);
+    expectHotelIsInTheDocument(riuPlaza);
+    expectHotelIsInTheDocument(radissonBlue);
+
+    expectHotelIsNotInTheDocument(hyperion);
+    expectHotelIsNotInTheDocument(hampton);
+    expectHotelIsNotInTheDocument(titanicComfort);
+
+    const hotelAddressFilterInput = screen.getByPlaceholderText(
+      filterByAddress
+    );
+
+    fireEvent.change(hotelAddressFilterInput, {
+      target: { value: "Karl-Liebknecht-Str" }
+    });
+
+    expectHotelIsInTheDocument(radissonBlue);
+
+    expectHotelIsNotInTheDocument(parkInn);
+    expectHotelIsNotInTheDocument(hampton);
+    expectHotelIsNotInTheDocument(titanicComfort);
+    expectHotelIsNotInTheDocument(hyperion);
+    expectHotelIsNotInTheDocument(riuPlaza);
   });
 
   it("toggles a filters selected state when it is selected", async () => {
