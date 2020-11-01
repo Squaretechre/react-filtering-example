@@ -71,7 +71,6 @@ export default function App() {
 
         <Filtering
           getOriginalDataSet={crabsWithDefaultOrdering}
-          getFilteredDataSet={filteredCrabs}
           setFilteredDataSet={setFilteredCrabs}
           onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
           applyTogether

@@ -37,7 +37,7 @@ export const Filtering = ({
     onRemoveAll.forEach((callback) => callback());
   };
 
-  const filterDataWithFilters = (filters) => {
+  const filterDataWith = (filters) => {
     let filteredDataSet = getOriginalDataSet;
 
     Object.keys(filters).forEach((filterName) => {
@@ -64,7 +64,7 @@ export const Filtering = ({
       )
       .filter((object) => object !== undefined);
 
-    filterDataWithFilters(appliedFilters);
+    filterDataWith(appliedFilters);
     setFilters(updatedFilters);
   };
 
@@ -103,7 +103,7 @@ export const Filtering = ({
       )
       .filter((object) => object !== undefined);
 
-    filterDataWithFilters(appliedFilters);
+    filterDataWith(appliedFilters);
   };
 
   const isFilterCurrentlyApplied = (name) => {
@@ -135,7 +135,7 @@ export const Filtering = ({
       updatedFilters = {
         ...filters,
         [name]: {
-          ...[name],
+          ...filters[name],
           isSelected: false,
           transformation
         }
@@ -144,7 +144,7 @@ export const Filtering = ({
       updatedFilters = {
         ...filters,
         [name]: {
-          ...[name],
+          ...filters[name],
           isSelected: true,
           transformation
         }
