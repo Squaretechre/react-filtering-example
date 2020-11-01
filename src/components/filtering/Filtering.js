@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 export const Filtering = ({
-  getOriginalDataSet,
-  setFilteredDataSet,
+  originalData,
+  setFilteredData,
   onRemoveAll,
   applyTogether,
   children
@@ -31,21 +31,21 @@ export const Filtering = ({
       removedFilters[filterId].isSelected = false;
     });
 
-    setFilteredDataSet(getOriginalDataSet);
+    setFilteredData(originalData);
     setFilters(removedFilters);
 
     onRemoveAll.forEach((callback) => callback());
   };
 
   const filterDataWith = (filters) => {
-    let filteredDataSet = getOriginalDataSet;
+    let filteredDataSet = originalData;
 
     Object.keys(filters).forEach((filterId) => {
       const filterToApply = filters[filterId];
       filteredDataSet = filteredDataSet.filter(filterToApply.condition);
     });
 
-    setFilteredDataSet(filteredDataSet);
+    setFilteredData(filteredDataSet);
   };
 
   const applySelected = () => {

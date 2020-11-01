@@ -70,8 +70,8 @@ export default function App() {
         <h2>Filtering</h2>
 
         <Filtering
-          getOriginalDataSet={crabsWithDefaultOrdering}
-          setFilteredDataSet={setFilteredCrabs}
+          originalData={crabsWithDefaultOrdering}
+          setFilteredData={setFilteredCrabs}
           onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
           applyTogether
         >

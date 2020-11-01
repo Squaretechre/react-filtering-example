@@ -24,8 +24,8 @@ const Hotels = () => {
   return (
     <>
       <Filtering
-        getOriginalDataSet={hotels}
-        setFilteredDataSet={setFilteredHotels}
+        originalData={hotels}
+        setFilteredData={setFilteredHotels}
         applyTogether
       >
         {(props) => {
