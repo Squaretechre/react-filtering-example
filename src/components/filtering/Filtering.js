@@ -42,7 +42,7 @@ export const Filtering = ({
 
     Object.keys(filters).forEach((filterId) => {
       const filterToApply = filters[filterId];
-      filteredDataSet = filteredDataSet.filter(filterToApply.transformation);
+      filteredDataSet = filteredDataSet.filter(filterToApply.condition);
     });
 
     setFilteredDataSet(filteredDataSet);
@@ -67,12 +67,12 @@ export const Filtering = ({
     setFilters(updatedFilters);
   };
 
-  const alwaysApply = (filterId, transformation) => {
-    apply(filterId, transformation, true);
-    select(filterId, transformation, true);
+  const alwaysApply = (filterId, condition) => {
+    apply(filterId, condition, true);
+    select(filterId, condition, true);
   };
 
-  const apply = (filterId, transformation, isAlwaysApplied = false) => {
+  const apply = (filterId, condition, isAlwaysApplied = false) => {
     let updatedFilters = {
       ...filters
     };
@@ -89,7 +89,7 @@ export const Filtering = ({
         ...filters,
         [filterId]: {
           isApplied: true,
-          transformation
+          condition
         }
       };
     }
@@ -125,7 +125,7 @@ export const Filtering = ({
     setFilters(updatedFilters);
   };
 
-  const select = (filterId, transformation, isAlwaysSelected = false) => {
+  const select = (filterId, condition, isAlwaysSelected = false) => {
     let updatedFilters = {
       ...filters
     };
@@ -136,7 +136,7 @@ export const Filtering = ({
         [filterId]: {
           ...filters[filterId],
           isSelected: false,
-          transformation
+          condition
         }
       };
     } else {
@@ -145,7 +145,7 @@ export const Filtering = ({
         [filterId]: {
           ...filters[filterId],
           isSelected: true,
-          transformation
+          condition
         }
       };
     }
@@ -168,7 +168,7 @@ export const Filtering = ({
 };
 
 export const Filter = ({
-  transformation,
+  condition,
   apply,
   isApplied,
   applyTogether,
@@ -185,10 +185,10 @@ export const Filter = ({
 
   const applyFilter = () => {
     if (!applyTogether) {
-      apply(filterId, transformation);
+      apply(filterId, condition);
       return;
     }
-    select(filterId, transformation);
+    select(filterId, condition);
   };
 
   return children({

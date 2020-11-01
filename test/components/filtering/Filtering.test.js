@@ -31,25 +31,22 @@ const Hotels = () => {
         {(props) => {
           return (
             <>
-              <Filter transformation={(hotel) => hotel.stars === 5} {...props}>
+              <Filter condition={(hotel) => hotel.stars === 5} {...props}>
                 {(props) => {
                   return <Button {...props}>5 star</Button>;
                 }}
               </Filter>
-              <Filter transformation={(hotel) => hotel.price < 100} {...props}>
+              <Filter condition={(hotel) => hotel.price < 100} {...props}>
                 {(props) => {
                   return <Button {...props}>{`price < 100`}</Button>;
                 }}
               </Filter>
-              <Filter transformation={(hotel) => hotel.stars > 3} {...props}>
+              <Filter condition={(hotel) => hotel.stars > 3} {...props}>
                 {(props) => {
                   return <Button {...props}>{"stars > 3"}</Button>;
                 }}
               </Filter>
-              <Filter
-                transformation={(hotel) => hotel.reviews > 6000}
-                {...props}
-              >
+              <Filter condition={(hotel) => hotel.reviews > 6000} {...props}>
                 {(props) => {
                   return <Button {...props}>{"reviews > 6000"}</Button>;
                 }}
