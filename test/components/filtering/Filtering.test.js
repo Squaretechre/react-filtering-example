@@ -5,12 +5,11 @@ import "@testing-library/jest-dom/extend-expect";
 
 import hotels from "../../data/hotels";
 
-const TestButton = ({ name, isSelected, applyFilter, applyTogether }) => {
+const Button = ({ isSelected, applyFilter, applyTogether, children }) => {
   return (
     <button onClick={applyFilter}>
-      {applyTogether && isSelected
-        ? `${name} selected`
-        : `${name} not selected`}
+      {children}
+      {applyTogether && isSelected ? ` selected` : ` not selected`}
     </button>
   );
 };
@@ -34,17 +33,17 @@ const Hotels = () => {
             <>
               <Filter transformation={(hotel) => hotel.stars === 5} {...props}>
                 {(props) => {
-                  return <TestButton name="5 star" {...props} />;
+                  return <Button {...props}>5 star</Button>;
                 }}
               </Filter>
               <Filter transformation={(hotel) => hotel.price < 100} {...props}>
                 {(props) => {
-                  return <TestButton name="price < 100" {...props} />;
+                  return <Button {...props}>{`price < 100`}</Button>;
                 }}
               </Filter>
               <Filter transformation={(hotel) => hotel.stars > 3} {...props}>
                 {(props) => {
-                  return <TestButton name="stars > 3" {...props} />;
+                  return <Button {...props}>{"stars > 3"}</Button>;
                 }}
               </Filter>
               <Filter
@@ -52,30 +51,28 @@ const Hotels = () => {
                 {...props}
               >
                 {(props) => {
-                  return <TestButton name="reviews > 6000" {...props} />;
+                  return <Button {...props}>{"reviews > 6000"}</Button>;
                 }}
               </Filter>
               <Filter {...props}>
                 {() => {
                   return (
-                    <div>
-                      <input
-                        type="text"
-                        placeholder="Filter by address"
-                        value={hotelAddressFilterSearchTerm}
-                        onChange={(event) => {
-                          const searchTerm = event.target.value.toLowerCase();
+                    <input
+                      type="text"
+                      placeholder="Filter by address"
+                      value={hotelAddressFilterSearchTerm}
+                      onChange={(event) => {
+                        const searchTerm = event.target.value.toLowerCase();
 
-                          props.alwaysApply("filter-hotel-address", (hotel) => {
-                            return hotel.address
-                              .toLowerCase()
-                              .includes(searchTerm);
-                          });
+                        props.alwaysApply("filter-hotel-address", (hotel) => {
+                          return hotel.address
+                            .toLowerCase()
+                            .includes(searchTerm);
+                        });
 
-                          setHotelAddressFilterSearchTerm(event.target.value);
-                        }}
-                      />
-                    </div>
+                        setHotelAddressFilterSearchTerm(event.target.value);
+                      }}
+                    />
                   );
                 }}
               </Filter>
