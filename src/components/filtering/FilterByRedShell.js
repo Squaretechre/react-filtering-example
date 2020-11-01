@@ -8,17 +8,8 @@ const FilterByRedShell = ({ ...props }) => (
     transformation={(crab) => crab.shellColour === "red"}
     {...props}
   >
-    {(isApplied, isSelected, applyFilter, applyTogether) => {
-      return (
-        <FilterButton
-          isApplied={isApplied}
-          isSelected={isSelected}
-          applyFilter={applyFilter}
-          applyTogether={applyTogether}
-        >
-          red crabs
-        </FilterButton>
-      );
+    {(props) => {
+      return <FilterButton {...props}>red crabs</FilterButton>;
     }}
   </Filter>
 );

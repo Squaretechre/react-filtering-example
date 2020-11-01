@@ -186,10 +186,10 @@ export const Filter = ({
     select(name, transformation);
   };
 
-  return children(
-    isApplied(name),
-    isSelected(name),
+  return children({
+    isApplied: isApplied(name),
+    isSelected: isSelected(name),
     applyFilter,
     applyTogether
-  );
+  });
 };

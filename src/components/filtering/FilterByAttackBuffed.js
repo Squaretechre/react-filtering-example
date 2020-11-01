@@ -8,17 +8,8 @@ const FilterByAttackBuffed = ({ ...props }) => (
     transformation={(crab) => crab.isAttackBuffed}
     {...props}
   >
-    {(isApplied, isSelected, applyFilter, applyTogether) => {
-      return (
-        <FilterButton
-          isApplied={isApplied}
-          isSelected={isSelected}
-          applyFilter={applyFilter}
-          applyTogether={applyTogether}
-        >
-          attack buffed crabs
-        </FilterButton>
-      );
+    {(props) => {
+      return <FilterButton {...props}>attack buffed crabs</FilterButton>;
     }}
   </Filter>
 );

@@ -8,17 +8,8 @@ const FilterByWeak = ({ ...props }) => (
     transformation={(crab) => crab.defence < 50}
     {...props}
   >
-    {(isApplied, isSelected, applyFilter, applyTogether) => {
-      return (
-        <FilterButton
-          isApplied={isApplied}
-          isSelected={isSelected}
-          applyFilter={applyFilter}
-          applyTogether={applyTogether}
-        >
-          weak crabs
-        </FilterButton>
-      );
+    {(props) => {
+      return <FilterButton {...props}>weak crabs</FilterButton>;
     }}
   </Filter>
 );

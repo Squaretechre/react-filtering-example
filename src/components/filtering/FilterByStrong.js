@@ -7,17 +7,8 @@ const FilterByStrong = ({ ...props }) => (
     transformation={(crab) => crab.strength > 50}
     {...props}
   >
-    {(isApplied, isSelected, applyFilter, applyTogether) => {
-      return (
-        <FilterButton
-          isApplied={isApplied}
-          isSelected={isSelected}
-          applyFilter={applyFilter}
-          applyTogether={applyTogether}
-        >
-          strong crabs
-        </FilterButton>
-      );
+    {(props) => {
+      return <FilterButton {...props}>strong crabs</FilterButton>;
     }}
   </Filter>
 );

@@ -37,16 +37,8 @@ const Hotels = () => {
                 transformation={(hotel) => hotel.stars === 5}
                 {...props}
               >
-                {(isApplied, isSelected, applyFilter, applyTogether) => {
-                  return (
-                    <TestButton
-                      name="5 star"
-                      isApplied={isApplied}
-                      isSelected={isSelected}
-                      applyFilter={applyFilter}
-                      applyTogether={applyTogether}
-                    />
-                  );
+                {(props) => {
+                  return <TestButton name="5 star" {...props} />;
                 }}
               </Filter>
               <Filter
@@ -54,16 +46,8 @@ const Hotels = () => {
                 transformation={(hotel) => hotel.price < 100}
                 {...props}
               >
-                {(isApplied, isSelected, applyFilter, applyTogether) => {
-                  return (
-                    <TestButton
-                      name="price < 100"
-                      isApplied={isApplied}
-                      isSelected={isSelected}
-                      applyFilter={applyFilter}
-                      applyTogether={applyTogether}
-                    />
-                  );
+                {(props) => {
+                  return <TestButton name="price < 100" {...props} />;
                 }}
               </Filter>
               <Filter
@@ -71,16 +55,8 @@ const Hotels = () => {
                 transformation={(hotel) => hotel.stars > 3}
                 {...props}
               >
-                {(isApplied, isSelected, applyFilter, applyTogether) => {
-                  return (
-                    <TestButton
-                      name="stars > 3"
-                      isApplied={isApplied}
-                      isSelected={isSelected}
-                      applyFilter={applyFilter}
-                      applyTogether={applyTogether}
-                    />
-                  );
+                {(props) => {
+                  return <TestButton name="stars > 3" {...props} />;
                 }}
               </Filter>
               <Filter
@@ -88,16 +64,8 @@ const Hotels = () => {
                 transformation={(hotel) => hotel.reviews > 6000}
                 {...props}
               >
-                {(isApplied, isSelected, applyFilter, applyTogether) => {
-                  return (
-                    <TestButton
-                      name="reviews > 6000"
-                      isApplied={isApplied}
-                      isSelected={isSelected}
-                      applyFilter={applyFilter}
-                      applyTogether={applyTogether}
-                    />
-                  );
+                {(props) => {
+                  return <TestButton name="reviews > 6000" {...props} />;
                 }}
               </Filter>
               <Filter {...props}>
