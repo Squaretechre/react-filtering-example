@@ -8,8 +8,9 @@ import hotels from "../../data/hotels";
 const Button = ({ isSelected, applyFilter, applyTogether, children }) => {
   return (
     <button onClick={applyFilter}>
-      {children}
-      {applyTogether && isSelected ? ` selected` : ` not selected`}
+      {`${children}${
+        applyTogether && isSelected ? ` selected` : ` not selected`
+      }`}
     </button>
   );
 };
@@ -51,6 +52,26 @@ const Hotels = () => {
                   return <Button {...props}>{"reviews > 6000"}</Button>;
                 }}
               </Filter>
+              <Filter
+                group="popularFacilities"
+                condition={(hotel) => hotel.popularFacilities.includes("Spa")}
+                {...props}
+              >
+                {(props) => {
+                  return <Button {...props}>{"has spa"}</Button>;
+                }}
+              </Filter>
+              <Filter
+                group="popularFacilities"
+                condition={(hotel) =>
+                  hotel.popularFacilities.includes("Swimming pool")
+                }
+                {...props}
+              >
+                {(props) => {
+                  return <Button {...props}>{"has swimming pool"}</Button>;
+                }}
+              </Filter>
               <Filter {...props}>
                 {() => {
                   return (
@@ -87,7 +108,7 @@ const Hotels = () => {
   );
 };
 
-const radissonBlue = "Radisson Blu Hotel, Berlin";
+const radissonBlu = "Radisson Blu Hotel, Berlin";
 const parkInn = "Park Inn by Radisson Berlin Alexanderplatz";
 const hampton = "Hampton by Hilton Berlin City Centre Alexanderplatz";
 const hyperion = "Hyperion Hotel Berlin";
@@ -102,6 +123,10 @@ const starsGreaterThan3Selected = "stars > 3 selected";
 const starsGreaterThan3NotSelected = "stars > 3 not selected";
 const reviewsGreaterThan6000Selected = "reviews > 6000 selected";
 const reviewsGreaterThan6000NotSelected = "reviews > 6000 not selected";
+const hasSpaSelected = "has spa selected";
+const hasSpaNotSelected = "has spa not selected";
+const hasSwimmingPoolSelected = "has swimming pool selected";
+const hasSwimmingPoolNotSelected = "has swimming pool not selected";
 
 const applyFilters = "Apply filters";
 const resetSelection = "Reset selection";
@@ -121,7 +146,7 @@ describe("Filtering", () => {
     it("does not apply any filters when it first renders", () => {
       render(<Hotels />);
 
-      expectHotelIsInTheDocument(radissonBlue);
+      expectHotelIsInTheDocument(radissonBlu);
       expectHotelIsInTheDocument(parkInn);
       expectHotelIsInTheDocument(hampton);
       expectHotelIsInTheDocument(hyperion);
@@ -136,7 +161,7 @@ describe("Filtering", () => {
     fireEvent.click(screen.getByText(fiveStarNotSelected));
     fireEvent.click(screen.getByText(priceLessThan100NotSelected));
 
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(hampton);
     expectHotelIsInTheDocument(hyperion);
@@ -153,7 +178,7 @@ describe("Filtering", () => {
 
     fireEvent.change(hotelAddressFilterInput, { target: { value: "Mitte" } });
 
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(hampton);
     expectHotelIsInTheDocument(titanicComfort);
@@ -168,7 +193,7 @@ describe("Filtering", () => {
     fireEvent.click(screen.getByText(fiveStarNotSelected));
     fireEvent.click(screen.getByText(applyFilters));
 
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
     expectHotelIsInTheDocument(hyperion);
 
     expectHotelIsNotInTheDocument(parkInn);
@@ -188,7 +213,7 @@ describe("Filtering", () => {
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
 
-    expectHotelIsNotInTheDocument(radissonBlue);
+    expectHotelIsNotInTheDocument(radissonBlu);
     expectHotelIsNotInTheDocument(hyperion);
     expectHotelIsNotInTheDocument(hampton);
     expectHotelIsNotInTheDocument(titanicComfort);
@@ -205,7 +230,23 @@ describe("Filtering", () => {
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
 
-    expectHotelIsNotInTheDocument(radissonBlue);
+    expectHotelIsNotInTheDocument(radissonBlu);
+    expectHotelIsNotInTheDocument(hyperion);
+    expectHotelIsNotInTheDocument(hampton);
+    expectHotelIsNotInTheDocument(titanicComfort);
+  });
+
+  it("applies multiple filters for the same property", async () => {
+    render(<Hotels />);
+
+    fireEvent.click(screen.getByText(hasSpaNotSelected));
+    fireEvent.click(screen.getByText(hasSwimmingPoolNotSelected));
+    fireEvent.click(screen.getByText(applyFilters));
+
+    expectHotelIsInTheDocument(radissonBlu);
+    expectHotelIsInTheDocument(parkInn);
+
+    expectHotelIsNotInTheDocument(riuPlaza);
     expectHotelIsNotInTheDocument(hyperion);
     expectHotelIsNotInTheDocument(hampton);
     expectHotelIsNotInTheDocument(titanicComfort);
@@ -219,7 +260,7 @@ describe("Filtering", () => {
 
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
     expectHotelIsInTheDocument(hyperion);
 
     expectHotelIsNotInTheDocument(hampton);
@@ -230,7 +271,7 @@ describe("Filtering", () => {
 
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
 
     expectHotelIsNotInTheDocument(hyperion);
     expectHotelIsNotInTheDocument(hampton);
@@ -242,7 +283,7 @@ describe("Filtering", () => {
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
 
-    expectHotelIsNotInTheDocument(radissonBlue);
+    expectHotelIsNotInTheDocument(radissonBlu);
     expectHotelIsNotInTheDocument(hyperion);
     expectHotelIsNotInTheDocument(hampton);
     expectHotelIsNotInTheDocument(titanicComfort);
@@ -257,7 +298,7 @@ describe("Filtering", () => {
 
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
 
     expectHotelIsNotInTheDocument(hyperion);
     expectHotelIsNotInTheDocument(hampton);
@@ -271,7 +312,7 @@ describe("Filtering", () => {
       target: { value: "Karl-Liebknecht-Str" }
     });
 
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
 
     expectHotelIsNotInTheDocument(parkInn);
     expectHotelIsNotInTheDocument(hampton);
@@ -353,7 +394,7 @@ describe("Filtering", () => {
 
     expectHotelIsInTheDocument(hyperion);
 
-    expectHotelIsNotInTheDocument(radissonBlue);
+    expectHotelIsNotInTheDocument(radissonBlu);
     expectHotelIsNotInTheDocument(parkInn);
     expectHotelIsNotInTheDocument(hampton);
     expectHotelIsNotInTheDocument(riuPlaza);
@@ -361,7 +402,7 @@ describe("Filtering", () => {
 
     fireEvent.click(screen.getByText(removeAllFilters));
 
-    expectHotelIsInTheDocument(radissonBlue);
+    expectHotelIsInTheDocument(radissonBlu);
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(hampton);
     expectHotelIsInTheDocument(hyperion);

@@ -48,6 +48,67 @@ export const Filtering = ({
     setFilteredData(filteredDataSet);
   };
 
+  const degroup = (filters) => {
+    const groupSet = Object.keys(filters)
+      .filter((key) => filters[key].group !== undefined)
+      .reduce((groups, key) => {
+        return groups.add(filters[key].group);
+      }, new Set());
+
+    const uniqueGroups = [...groupSet];
+
+    const filtersWithGroupAssigned = Object.keys(filters)
+      .map((filterName) => {
+        const filter = filters[filterName];
+        return filter.group ? filter : undefined;
+      })
+      .filter((object) => object !== undefined);
+
+    const idsForfiltersWithoutGroupAssigned = Object.keys(filters)
+      .map((filterId) => {
+        const filter = filters[filterId];
+        return filter.group === undefined ? filterId : undefined;
+      })
+      .filter((object) => object !== undefined);
+
+    const filtersWithoutGroupAssigned = Object.keys(filters).reduce(
+      (filtersAccumulator, filterId) => {
+        if (idsForfiltersWithoutGroupAssigned.includes(filterId)) {
+          filtersAccumulator[filterId] = filters[filterId];
+        }
+        return filtersAccumulator;
+      },
+      {}
+    );
+
+    const combinedGroupFilters = uniqueGroups.reduce(
+      (filtersAccumulator, groupName) => {
+        const filtersAssignedToThisGroup = filtersWithGroupAssigned
+          .map((filter) => {
+            return filter.group === groupName ? filter : undefined;
+          })
+          .filter((object) => object !== undefined);
+
+        const conditionsInThisGroup = filtersAssignedToThisGroup.map(
+          (filter) => filter.condition
+        );
+
+        filtersAccumulator[groupName] = {
+          condition: (input) =>
+            conditionsInThisGroup.some((condition) => condition(input))
+        };
+
+        return filtersAccumulator;
+      },
+      {}
+    );
+
+    return {
+      ...combinedGroupFilters,
+      ...filtersWithoutGroupAssigned
+    };
+  };
+
   const applySelected = () => {
     const updatedFilters = {
       ...filters
@@ -63,16 +124,16 @@ export const Filtering = ({
       )
       .filter((object) => object !== undefined);
 
-    filterDataWith(appliedFilters);
+    filterDataWith(degroup(appliedFilters));
     setFilters(updatedFilters);
   };
 
   const alwaysApply = (filterId, condition) => {
-    apply(filterId, condition, true);
-    select(filterId, condition, true);
+    apply(filterId, undefined, condition, true);
+    select(filterId, undefined, condition, true);
   };
 
-  const apply = (filterId, condition, isAlwaysApplied = false) => {
+  const apply = (filterId, group, condition, isAlwaysApplied = false) => {
     let updatedFilters = {
       ...filters
     };
@@ -81,7 +142,8 @@ export const Filtering = ({
       updatedFilters = {
         ...filters,
         [filterId]: {
-          isApplied: false
+          isApplied: false,
+          group
         }
       };
     } else {
@@ -89,7 +151,8 @@ export const Filtering = ({
         ...filters,
         [filterId]: {
           isApplied: true,
-          condition
+          condition,
+          group
         }
       };
     }
@@ -125,7 +188,7 @@ export const Filtering = ({
     setFilters(updatedFilters);
   };
 
-  const select = (filterId, condition, isAlwaysSelected = false) => {
+  const select = (filterId, group, condition, isAlwaysSelected = false) => {
     let updatedFilters = {
       ...filters
     };
@@ -135,6 +198,7 @@ export const Filtering = ({
         ...filters,
         [filterId]: {
           ...filters[filterId],
+          group,
           isSelected: false,
           condition
         }
@@ -143,6 +207,7 @@ export const Filtering = ({
       updatedFilters = {
         ...filters,
         [filterId]: {
+          group,
           ...filters[filterId],
           isSelected: true,
           condition
@@ -168,6 +233,7 @@ export const Filtering = ({
 };
 
 export const Filter = ({
+  group,
   condition,
   apply,
   isApplied,
@@ -184,11 +250,11 @@ export const Filter = ({
   const [filterId] = useState(createFilterId());
 
   const applyFilter = () => {
-    if (!applyTogether) {
-      apply(filterId, condition);
+    if (applyTogether) {
+      select(filterId, group, condition);
       return;
     }
-    select(filterId, condition);
+    apply(filterId, group, condition);
   };
 
   return children({
