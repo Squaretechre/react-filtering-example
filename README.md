@@ -1,2 +1,2 @@
-# react-filtering-example
-A quick spike of using render props to apply filtering to data.
+# React Sort and Filter
+Components for sorting and filtering an array of objects kept in state.
