@@ -15,7 +15,7 @@ const Button = ({ isSelected, applyFilter, applyTogether, children }) => {
   );
 };
 
-const Hotels = () => {
+const Hotels = ({ onRemoveAllCallbacks }) => {
   const [filteredHotels, setFilteredHotels] = useState(hotels);
   const [
     hotelAddressFilterSearchTerm,
@@ -27,6 +27,7 @@ const Hotels = () => {
       <Filtering
         originalData={hotels}
         setFilteredData={setFilteredHotels}
+        onRemoveAll={onRemoveAllCallbacks}
         applyTogether
       >
         {(props) => {
@@ -123,9 +124,7 @@ const starsGreaterThan3Selected = "stars > 3 selected";
 const starsGreaterThan3NotSelected = "stars > 3 not selected";
 const reviewsGreaterThan6000Selected = "reviews > 6000 selected";
 const reviewsGreaterThan6000NotSelected = "reviews > 6000 not selected";
-const hasSpaSelected = "has spa selected";
 const hasSpaNotSelected = "has spa not selected";
-const hasSwimmingPoolSelected = "has swimming pool selected";
 const hasSwimmingPoolNotSelected = "has swimming pool not selected";
 
 const applyFilters = "Apply filters";
@@ -321,6 +320,30 @@ describe("Filtering", () => {
     expectHotelIsNotInTheDocument(riuPlaza);
   });
 
+  it("always applied filters on top of multiple filters for the same property", async () => {
+    render(<Hotels />);
+
+    fireEvent.click(screen.getByText(hasSpaNotSelected));
+    fireEvent.click(screen.getByText(hasSwimmingPoolNotSelected));
+    fireEvent.click(screen.getByText(applyFilters));
+
+    const hotelAddressFilterInput = screen.getByPlaceholderText(
+      filterByAddress
+    );
+
+    fireEvent.change(hotelAddressFilterInput, {
+      target: { value: "Karl-Liebknecht-Str" }
+    });
+
+    expectHotelIsInTheDocument(radissonBlu);
+
+    expectHotelIsNotInTheDocument(parkInn);
+    expectHotelIsNotInTheDocument(riuPlaza);
+    expectHotelIsNotInTheDocument(hyperion);
+    expectHotelIsNotInTheDocument(hampton);
+    expectHotelIsNotInTheDocument(titanicComfort);
+  });
+
   it("toggles a filters selected state when it is selected", async () => {
     render(<Hotels />);
 
@@ -408,5 +431,21 @@ describe("Filtering", () => {
     expectHotelIsInTheDocument(hyperion);
     expectHotelIsInTheDocument(riuPlaza);
     expectHotelIsInTheDocument(titanicComfort);
+  });
+
+  it("invokes the on remove all callbacks when when the remove all callback is invoked", async () => {
+    const callback1 = jest.fn();
+    const callback2 = jest.fn();
+    const callback3 = jest.fn();
+
+    const onRemoveAllCallbacks = [callback1, callback2, callback3];
+
+    render(<Hotels onRemoveAllCallbacks={onRemoveAllCallbacks} />);
+
+    fireEvent.click(screen.getByText(removeAllFilters));
+
+    expect(callback1).toHaveBeenCalledTimes(1);
+    expect(callback2).toHaveBeenCalledTimes(1);
+    expect(callback3).toHaveBeenCalledTimes(1);
   });
 });

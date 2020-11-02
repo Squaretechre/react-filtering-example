@@ -165,7 +165,7 @@ export const Filtering = ({
       )
       .filter((object) => object !== undefined);
 
-    filterDataWith(appliedFilters);
+    filterDataWith(degroup(appliedFilters));
   };
 
   const isFilterCurrentlyApplied = (filterId) => {

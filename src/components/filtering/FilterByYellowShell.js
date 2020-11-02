@@ -3,7 +3,11 @@ import { Filter } from "./Filtering";
 import FilterButton from "./FilterButton";
 
 const FilterByYellowShell = ({ ...props }) => (
-  <Filter condition={(crab) => crab.shellColour === "yellow"} {...props}>
+  <Filter
+    group="shellColour"
+    condition={(crab) => crab.shellColour === "yellow"}
+    {...props}
+  >
     {(props) => {
       return <FilterButton {...props}>yellow crabs</FilterButton>;
     }}
