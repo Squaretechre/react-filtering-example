@@ -5,7 +5,8 @@ export default [
     defence: 100,
     shellColour: "hot pink",
     isAttackBuffed: true,
-    ifDefenceBuffed: true
+    ifDefenceBuffed: true,
+    items: ["sword", "shield", "potion"]
   },
   {
     name: "Clawmaster Flex",
@@ -13,7 +14,8 @@ export default [
     defence: 50,
     shellColour: "red",
     isAttackBuffed: true,
-    ifDefenceBuffed: true
+    ifDefenceBuffed: true,
+    items: ["sword"]
   },
   {
     name: "DJ Decapod",
@@ -21,7 +23,8 @@ export default [
     defence: 70,
     shellColour: "green",
     isAttackBuffed: false,
-    ifDefenceBuffed: false
+    ifDefenceBuffed: false,
+    items: ["shield", "potion"]
   },
   {
     name: "MC Crabalab",
@@ -29,7 +32,8 @@ export default [
     defence: 10,
     shellColour: "red",
     isAttackBuffed: false,
-    ifDefenceBuffed: true
+    ifDefenceBuffed: true,
+    items: ["shield", "potion", "magical claw"]
   },
   {
     name: "Crabs McClaw",
@@ -37,7 +41,8 @@ export default [
     defence: 80,
     shellColour: "blue",
     isAttackBuffed: false,
-    ifDefenceBuffed: true
+    ifDefenceBuffed: true,
+    items: ["potion"]
   },
   {
     name: "Johnny Rawclaws",
@@ -45,7 +50,8 @@ export default [
     defence: 100,
     shellColour: "purple",
     isAttackBuffed: true,
-    ifDefenceBuffed: true
+    ifDefenceBuffed: true,
+    items: ["battle axe"]
   },
   {
     name: "Sir Crabbo of Clawford",
@@ -53,7 +59,8 @@ export default [
     defence: 95,
     shellColour: "white",
     isAttackBuffed: true,
-    ifDefenceBuffed: false
+    ifDefenceBuffed: false,
+    items: ["sword", "monocle", "top hat"]
   },
   {
     name: "Abraclawdabra",
@@ -61,6 +68,7 @@ export default [
     defence: 80,
     shellColour: "yellow",
     isAttackBuffed: true,
-    ifDefenceBuffed: true
+    ifDefenceBuffed: true,
+    items: ["potion", "magical claw"]
   }
 ];

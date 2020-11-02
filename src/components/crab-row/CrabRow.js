@@ -3,6 +3,7 @@ import "./styles.css";
 
 const valueForKey = (object, key) => {
   const value = object[key];
+  if (Array.isArray(value)) return value.join(", ");
   if (typeof value !== "boolean") return value;
   return value === true ? "true" : "false";
 };

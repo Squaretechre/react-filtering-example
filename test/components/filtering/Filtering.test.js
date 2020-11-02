@@ -408,7 +408,7 @@ describe("Filtering", () => {
     ).toBeInTheDocument();
   });
 
-  it("removes all applied filter when the remove all callback is invoked", async () => {
+  it("removes all applied filters when the remove all callback is invoked", async () => {
     render(<Hotels />);
 
     fireEvent.click(screen.getByText(fiveStarNotSelected));

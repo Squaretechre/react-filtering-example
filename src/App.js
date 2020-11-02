@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CrabEmoji } from "./components/emojis/Emoji";
 
-import { Filtering } from "./components/filtering/Filtering";
+import { Filtering, Filter } from "./components/filtering/Filtering";
 import { Sorting } from "./components/sorting/Sorting";
 
 import SortByDefaultOrdering, {
@@ -23,12 +23,20 @@ import FilterByAttackBuffed from "./components/filtering/FilterByAttackBuffed";
 import RemoveAllButton from "./components/filtering/RemoveAllButton";
 import ApplyFiltersButton from "./components/filtering/ApplyFiltersButton";
 import ResetSelectionButton from "./components/filtering/ResetSelectionButton";
+import FilterButton from "./components/filtering/FilterButton";
 
 import CrabRow from "./components/crab-row/CrabRow";
 
 import crabs from "./data/crabs";
 
 import "./styles.css";
+
+const uniqueItems = () => {
+  const items = crabs.reduce((items, crab) => [...items, ...crab.items], []);
+  return [...new Set(items)];
+};
+
+console.log(uniqueItems());
 
 const crabsWithDefaultOrdering = withDefaultSortOrdering(crabs);
 
@@ -73,7 +81,7 @@ export default function App() {
           originalData={crabsWithDefaultOrdering}
           setFilteredData={setFilteredCrabs}
           onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
-          applyTogether
+          // applyTogether
         >
           {(props) => {
             return (
@@ -89,6 +97,21 @@ export default function App() {
                   <FilterByStrong {...props} />
                   <FilterByWeak {...props} />
                   <FilterByAttackBuffed {...props} />
+                  {uniqueItems().map((item) => {
+                    return (
+                      <Filter
+                        group="items"
+                        condition={(crab) => crab.items.includes(item)}
+                        {...props}
+                      >
+                        {(props) => {
+                          return (
+                            <FilterButton {...props}>has {item}</FilterButton>
+                          );
+                        }}
+                      </Filter>
+                    );
+                  })}
                 </div>
                 <div className="filterControls">
                   {props.applyTogether && <ApplyFiltersButton {...props} />}
