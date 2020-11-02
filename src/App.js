@@ -36,8 +36,6 @@ const uniqueItems = () => {
   return [...new Set(items)];
 };
 
-console.log(uniqueItems());
-
 const crabsWithDefaultOrdering = withDefaultSortOrdering(crabs);
 
 export default function App() {
@@ -81,7 +79,7 @@ export default function App() {
           originalData={crabsWithDefaultOrdering}
           setFilteredData={setFilteredCrabs}
           onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
-          // applyTogether
+          applyTogether
         >
           {(props) => {
             return (
