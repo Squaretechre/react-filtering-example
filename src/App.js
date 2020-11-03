@@ -38,6 +38,11 @@ const uniqueItems = () => {
 
 const crabsWithDefaultOrdering = withDefaultSortOrdering(crabs);
 
+const initialState = {
+  redCrabs: true,
+  strongCrabs: true
+};
+
 export default function App() {
   const [filteredCrabs, setFilteredCrabs] = useState(crabsWithDefaultOrdering);
   const [currentSorting, setCurrentSorting] = useState(
@@ -76,6 +81,7 @@ export default function App() {
         <h2>Filtering</h2>
 
         <Filtering
+          initialState={initialState}
           originalData={crabsWithDefaultOrdering}
           setFilteredData={setFilteredCrabs}
           onRemoveAll={[() => setCrabNameFilterSearchTerm("")]}
@@ -90,9 +96,9 @@ export default function App() {
                   {...props}
                 />
                 <div className="filters">
-                  <FilterByRedShell {...props} />
+                  <FilterByRedShell name="redCrabs" {...props} />
                   <FilterByYellowShell {...props} />
-                  <FilterByStrong {...props} />
+                  <FilterByStrong name="strongCrabs" {...props} />
                   <FilterByWeak {...props} />
                   <FilterByAttackBuffed {...props} />
                   {uniqueItems().map((item) => {

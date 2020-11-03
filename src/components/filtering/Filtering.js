@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+
+const createInitialFilterState = (initialState) => {
+  return Object.keys(initialState).reduce((state, key) => {
+    return initialState[key]
+      ? {
+          ...state,
+          [key]: {
+            isInitialized: true
+          }
+        }
+      : state;
+  }, {});
+};
 
 export const Filtering = ({
+  initialState = {},
   originalData,
   setFilteredData,
   onRemoveAll,
   applyTogether,
   children
 }) => {
-  const [filters, setFilters] = useState([]);
-  const [removeCallbacks, setRemoveCallbacks] = useState({});
+  const initialFilterState = useMemo(
+    () => createInitialFilterState(initialState),
+    [initialState]
+  );
+
+  const [filters, setFilters] = useState(initialFilterState);
+  const [removeCallbacks, setRemoveCallbacks] = useState([]);
 
   const registerRemoveCallback = (filterId, callback) => {
     if (removeCallbacks[filterId]) return;
@@ -138,23 +157,36 @@ export const Filtering = ({
       ...filters
     };
 
-    if (!isAlwaysApplied && isFilterCurrentlyApplied(filterId)) {
-      updatedFilters = {
-        ...filters,
-        [filterId]: {
-          isApplied: false,
-          group
-        }
-      };
-    } else {
+    if (isFilterInitialized(filterId)) {
       updatedFilters = {
         ...filters,
         [filterId]: {
           isApplied: true,
+          isSelected: true,
+          isInitialized: false,
           condition,
           group
         }
       };
+    } else {
+      if (!isAlwaysApplied && isFilterCurrentlyApplied(filterId)) {
+        updatedFilters = {
+          ...filters,
+          [filterId]: {
+            isApplied: false,
+            group
+          }
+        };
+      } else {
+        updatedFilters = {
+          ...filters,
+          [filterId]: {
+            isApplied: true,
+            condition,
+            group
+          }
+        };
+      }
     }
 
     setFilters(updatedFilters);
@@ -174,6 +206,10 @@ export const Filtering = ({
 
   const isFilterCurrentlySelected = (filterId) => {
     return filters[filterId] ? filters[filterId].isSelected : false;
+  };
+
+  const isFilterInitialized = (filterId) => {
+    return filters[filterId] ? filters[filterId].isInitialized : false;
   };
 
   const resetSelection = () => {
@@ -225,6 +261,7 @@ export const Filtering = ({
     applyTogether,
     isApplied: isFilterCurrentlyApplied,
     isSelected: isFilterCurrentlySelected,
+    isInitialized: isFilterInitialized,
     registerRemoveCallback,
     removeAll,
     select,
@@ -233,21 +270,31 @@ export const Filtering = ({
 };
 
 export const Filter = ({
+  name,
   group,
   condition,
   apply,
-  isApplied,
   applyTogether,
+  isApplied,
   isSelected,
+  isInitialized,
   select,
   children
 }) => {
-  const createFilterId = () => `
+  const createFilterId = () =>
+    name ||
+    `
     ${Date.now().toString(36)}
     ${Math.random().toString(36)}
     ${Math.random().toString(36)}`;
 
   const [filterId] = useState(createFilterId());
+
+  useEffect(() => {
+    if (isInitialized(filterId)) {
+      apply(filterId, group, condition);
+    }
+  }, [isInitialized]);
 
   const applyFilter = () => {
     if (applyTogether) {

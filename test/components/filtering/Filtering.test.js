@@ -15,7 +15,7 @@ const Button = ({ isSelected, applyFilter, applyTogether, children }) => {
   );
 };
 
-const Hotels = ({ onRemoveAllCallbacks }) => {
+const Hotels = ({ onRemoveAllCallbacks, initialState }) => {
   const [filteredHotels, setFilteredHotels] = useState(hotels);
   const [
     hotelAddressFilterSearchTerm,
@@ -25,6 +25,7 @@ const Hotels = ({ onRemoveAllCallbacks }) => {
   return (
     <>
       <Filtering
+        initialState={initialState}
         originalData={hotels}
         setFilteredData={setFilteredHotels}
         onRemoveAll={onRemoveAllCallbacks}
@@ -38,17 +39,29 @@ const Hotels = ({ onRemoveAllCallbacks }) => {
                   return <Button {...props}>5 star</Button>;
                 }}
               </Filter>
-              <Filter condition={(hotel) => hotel.price < 100} {...props}>
+              <Filter
+                name="priceLessThan100"
+                condition={(hotel) => hotel.price < 100}
+                {...props}
+              >
                 {(props) => {
                   return <Button {...props}>{`price < 100`}</Button>;
                 }}
               </Filter>
-              <Filter condition={(hotel) => hotel.stars > 3} {...props}>
+              <Filter
+                name="starsGreaterThan3"
+                condition={(hotel) => hotel.stars > 3}
+                {...props}
+              >
                 {(props) => {
                   return <Button {...props}>{"stars > 3"}</Button>;
                 }}
               </Filter>
-              <Filter condition={(hotel) => hotel.reviews > 6000} {...props}>
+              <Filter
+                name="reviewsGreaterThan6000"
+                condition={(hotel) => hotel.reviews > 6000}
+                {...props}
+              >
                 {(props) => {
                   return <Button {...props}>{"reviews > 6000"}</Button>;
                 }}
@@ -225,6 +238,24 @@ describe("Filtering", () => {
     fireEvent.click(screen.getByText(starsGreaterThan3NotSelected));
     fireEvent.click(screen.getByText(reviewsGreaterThan6000NotSelected));
     fireEvent.click(screen.getByText(applyFilters));
+
+    expectHotelIsInTheDocument(parkInn);
+    expectHotelIsInTheDocument(riuPlaza);
+
+    expectHotelIsNotInTheDocument(radissonBlu);
+    expectHotelIsNotInTheDocument(hyperion);
+    expectHotelIsNotInTheDocument(hampton);
+    expectHotelIsNotInTheDocument(titanicComfort);
+  });
+
+  it("applies initial state for named filters", async () => {
+    const initialState = {
+      priceLessThan100: true,
+      starsGreaterThan3: true,
+      reviewsGreaterThan6000: true
+    };
+
+    render(<Hotels initialState={initialState} />);
 
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
