@@ -14,7 +14,7 @@ const createInitialFilterState = (initialState) => {
 };
 
 export const Filtering = ({
-  initialState = {},
+  initiallyAppliedFilters = {},
   originalData,
   setFilteredData,
   onRemoveAll,
@@ -22,8 +22,8 @@ export const Filtering = ({
   children
 }) => {
   const initialFilterState = useMemo(
-    () => createInitialFilterState(initialState),
-    [initialState]
+    () => createInitialFilterState(initiallyAppliedFilters),
+    [initiallyAppliedFilters]
   );
 
   const [filters, setFilters] = useState(initialFilterState);

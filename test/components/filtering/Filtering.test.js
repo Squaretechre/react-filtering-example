@@ -17,7 +17,7 @@ const Button = ({ isSelected, applyFilter, applyTogether, children }) => {
 
 const Hotels = ({
   onRemoveAllCallbacks,
-  initialState,
+  initiallyAppliedFilters,
   addressFilterSearchTerm = ""
 }) => {
   const [filteredHotels, setFilteredHotels] = useState(hotels);
@@ -31,7 +31,7 @@ const Hotels = ({
   return (
     <>
       <Filtering
-        initialState={initialState}
+        initiallyAppliedFilters={initiallyAppliedFilters}
         originalData={hotels}
         setFilteredData={setFilteredHotels}
         onRemoveAll={onRemoveAllCallbacks}
@@ -258,13 +258,13 @@ describe("Filtering", () => {
   });
 
   it("applies initial state for named filters", async () => {
-    const initialState = {
-      priceLessThan100: true,
-      starsGreaterThan3: true,
-      reviewsGreaterThan6000: true
+    const initiallyAppliedFilters = {
+      priceLessThan100: "priceLessThan100",
+      starsGreaterThan3: "starsGreaterThan3",
+      reviewsGreaterThan6000: "reviewsGreaterThan6000"
     };
 
-    render(<Hotels initialState={initialState} />);
+    render(<Hotels initiallyAppliedFilters={initiallyAppliedFilters} />);
 
     expectHotelIsInTheDocument(parkInn);
     expectHotelIsInTheDocument(riuPlaza);
@@ -276,13 +276,13 @@ describe("Filtering", () => {
   });
 
   it("applies initial state for named always applied filters", async () => {
-    const initialState = {
-      address: true
+    const initiallyAppliedFilters = {
+      address: "address"
     };
 
     render(
       <Hotels
-        initialState={initialState}
+        initiallyAppliedFilters={initiallyAppliedFilters}
         addressFilterSearchTerm="Charlottenburg"
       />
     );
