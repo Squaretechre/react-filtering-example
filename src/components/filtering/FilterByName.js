@@ -1,32 +1,36 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Filter } from "./Filtering";
 import { MagnifyingGlassTiltedLeftEmoji } from "../emojis/Emoji";
 import "./styles.css";
 
 const FilterByName = ({
   alwaysApply,
+  applyFilter,
   currentSearchTerm,
   setCurrentSearchTerm,
   ...props
 }) => {
+  const searchTermElement = useRef(null);
   return (
-    <Filter {...props}>
-      {() => {
+    <Filter
+      alwaysApply
+      condition={(crab) =>
+        crab.name.toLowerCase().includes(searchTermElement.current.value)
+      }
+      {...props}
+    >
+      {({ applyFilter }) => {
         return (
           <div className="filterByName">
             <MagnifyingGlassTiltedLeftEmoji className="filterByName__icon" />
             <input
+              ref={searchTermElement}
               type="text"
               value={currentSearchTerm}
               placeholder="Filter by crab name..."
               onChange={(event) => {
-                const searchTerm = event.target.value.toLowerCase();
-
-                alwaysApply("search-crab-name", (crab) => {
-                  return crab.name.toLowerCase().includes(searchTerm);
-                });
-
                 setCurrentSearchTerm(event.target.value);
+                applyFilter();
               }}
             />
           </div>

@@ -40,7 +40,8 @@ const crabsWithDefaultOrdering = withDefaultSortOrdering(crabs);
 
 const initialState = {
   redCrabs: true,
-  strongCrabs: true
+  strongCrabs: true,
+  crabSearch: true
 };
 
 export default function App() {
@@ -48,7 +49,9 @@ export default function App() {
   const [currentSorting, setCurrentSorting] = useState(
     sortByDefaultOrderingConfig
   );
-  const [crabNameFilterSearchTerm, setCrabNameFilterSearchTerm] = useState("");
+  const [crabNameFilterSearchTerm, setCrabNameFilterSearchTerm] = useState(
+    "flex"
+  );
 
   return (
     <div className="App">
@@ -91,6 +94,7 @@ export default function App() {
             return (
               <>
                 <FilterByName
+                  name="crabSearch"
                   currentSearchTerm={crabNameFilterSearchTerm}
                   setCurrentSearchTerm={setCrabNameFilterSearchTerm}
                   {...props}

@@ -147,7 +147,7 @@ export const Filtering = ({
     setFilters(updatedFilters);
   };
 
-  const alwaysApply = (filterId, condition) => {
+  const alwaysApplyFilter = (filterId, condition) => {
     apply(filterId, undefined, condition, true);
     select(filterId, undefined, condition, true);
   };
@@ -257,7 +257,7 @@ export const Filtering = ({
   return children({
     apply,
     applySelected,
-    alwaysApply,
+    alwaysApplyFilter,
     applyTogether,
     isApplied: isFilterCurrentlyApplied,
     isSelected: isFilterCurrentlySelected,
@@ -274,6 +274,8 @@ export const Filter = ({
   group,
   condition,
   apply,
+  alwaysApply,
+  alwaysApplyFilter,
   applyTogether,
   isApplied,
   isSelected,
@@ -297,6 +299,10 @@ export const Filter = ({
   }, [isInitialized]);
 
   const applyFilter = () => {
+    if (alwaysApply) {
+      alwaysApplyFilter(filterId, condition);
+      return;
+    }
     if (applyTogether) {
       select(filterId, group, condition);
       return;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Filtering, Filter } from "../../../src/components/filtering/Filtering";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -15,12 +15,18 @@ const Button = ({ isSelected, applyFilter, applyTogether, children }) => {
   );
 };
 
-const Hotels = ({ onRemoveAllCallbacks, initialState }) => {
+const Hotels = ({
+  onRemoveAllCallbacks,
+  initialState,
+  addressFilterSearchTerm = ""
+}) => {
   const [filteredHotels, setFilteredHotels] = useState(hotels);
   const [
     hotelAddressFilterSearchTerm,
     setHotelAddressFilterSearchTerm
-  ] = useState("");
+  ] = useState(addressFilterSearchTerm);
+
+  const searchTermElement = useRef();
 
   return (
     <>
@@ -86,22 +92,25 @@ const Hotels = ({ onRemoveAllCallbacks, initialState }) => {
                   return <Button {...props}>{"has swimming pool"}</Button>;
                 }}
               </Filter>
-              <Filter {...props}>
-                {() => {
+              <Filter
+                name="address"
+                condition={(hotel) =>
+                  hotel.address
+                    .toLowerCase()
+                    .includes(searchTermElement.current.value.toLowerCase())
+                }
+                alwaysApply
+                {...props}
+              >
+                {({ applyFilter }) => {
                   return (
                     <input
+                      ref={searchTermElement}
                       type="text"
                       placeholder="Filter by address"
                       value={hotelAddressFilterSearchTerm}
                       onChange={(event) => {
-                        const searchTerm = event.target.value.toLowerCase();
-
-                        props.alwaysApply("filter-hotel-address", (hotel) => {
-                          return hotel.address
-                            .toLowerCase()
-                            .includes(searchTerm);
-                        });
-
+                        applyFilter();
                         setHotelAddressFilterSearchTerm(event.target.value);
                       }}
                     />
@@ -262,6 +271,27 @@ describe("Filtering", () => {
 
     expectHotelIsNotInTheDocument(radissonBlu);
     expectHotelIsNotInTheDocument(hyperion);
+    expectHotelIsNotInTheDocument(hampton);
+    expectHotelIsNotInTheDocument(titanicComfort);
+  });
+
+  it("applies initial state for named always applied filters", async () => {
+    const initialState = {
+      address: true
+    };
+
+    render(
+      <Hotels
+        initialState={initialState}
+        addressFilterSearchTerm="Charlottenburg"
+      />
+    );
+
+    expectHotelIsInTheDocument(hyperion);
+
+    expectHotelIsNotInTheDocument(parkInn);
+    expectHotelIsNotInTheDocument(riuPlaza);
+    expectHotelIsNotInTheDocument(radissonBlu);
     expectHotelIsNotInTheDocument(hampton);
     expectHotelIsNotInTheDocument(titanicComfort);
   });
